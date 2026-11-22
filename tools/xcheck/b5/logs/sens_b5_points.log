@@ -1,0 +1,10 @@
+B5(73) = 91 -> 92: worst 0.9236, still closed
+B5(114) = 137 -> 138: worst 0.9236, still closed
+B5(119) = 141 -> 142: worst 0.9236, still closed
+B5(120) = 143 -> 144: worst 0.9236, still closed
+B5(121) = 143 -> 144: worst 0.9236, still closed
+without B5(73): worst 1.4639, OPENS
+without B5(114): worst 0.9236, still closed
+without B5(119): worst 0.9236, still closed
+without B5(120): worst 0.9236, still closed
+without B5(121): worst 1.4639, OPENS

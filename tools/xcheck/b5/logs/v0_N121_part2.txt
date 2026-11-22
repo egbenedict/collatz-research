@@ -1,0 +1,1 @@
+SUMMARY N=121 T=143 KMAX=139 w=26 ID=2 NW=8 right=22349 left=506249752 matches=83247056 hits=0 max_total=-1

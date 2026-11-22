@@ -1,0 +1,476 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}{Input}
+\renewcommand{\thehypothesis}{I\arabic{hypothesis}}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Kst}{K^{*}}
+\newcommand{\Lst}{L^{*}}
+\newcommand{\Nst}{N^{*}}
+\newcommand{\epsmax}{\varepsilon_{\max}}
+\newcommand{\Ahi}{A_{\mathrm{hi}}}
+
+\title[No Collatz 92-cycles (draft)]{There are no Collatz $92$-cycles\\[2pt] \normalsize (unreviewed draft)}
+\date{November 21, 2026}
+
+\begin{document}
+
+\begin{abstract}
+We show that the Collatz map has no nontrivial cycle with exactly $92$ local minima.
+With Hercher's theorem this gives no $m$-cycles for $m \le 92$. Published bounds and an
+exhaustive continued-fraction enumeration leave exactly one admissible pair
+$(K, L) = (\Kst, \Lst)$ of odd and even counts. We rule it out with two new lemmas and
+a finite computer search. The first lemma is an exact budget identity forcing near-maximal
+growth. The second pins the cycle's smallest element to a narrow window using its
+archimedean size.
+\end{abstract}
+
+\maketitle
+
+\noindent\textbf{Status.} This is a computer-assisted argument that nobody else has checked
+yet. It relies on the inputs listed in Section~\ref{sec:statement}. All code is in
+\texttt{collatz/tools/}.
+
+\noindent\textbf{Prior work.} This result is not new. Unrefereed but kernel-checked Lean~4 proofs
+already exclude $m \le 101$ (J.~Alick) and $m \le 111$ (L.~Marshall), and X.~Wang has an $m \le 95$
+preprint. Their ``two-rise'' and ``chain'' bounds are essentially our Corollary~\ref{cor:prune} and
+Lemma~\ref{lem:budget}. This note is an independent rediscovery and cross-check.
+
+%======================================================================
+\section{Statement and inputs}\label{sec:statement}
+%======================================================================
+
+\begin{theorem}\label{thm:main}
+There is no nontrivial cycle of the Collatz map with exactly $92$ local minima. Consequently
+(with Input~\ref{in:hercher91}) there is no nontrivial $m$-cycle for any $m \le 92$.
+\end{theorem}
+
+The proof has three steps.
+\begin{enumerate}[label=\textbf{Step \arabic*.}, leftmargin=*]
+  \item \emph{Reduction} (Section~\ref{sec:reduction}). The published bounds and an
+  exhaustive lattice enumeration leave exactly one admissible pair
+  \[
+    \Kst = 205\,632\,218\,873\,398\,596\,256, \qquad
+    \Lst = 120\,287\,136\,981\,023\,372\,109 .
+  \]
+  \item \emph{Two lemmas} (Section~\ref{sec:lemmas}). The budget identity (Lemma~\ref{lem:budget})
+  forces the first local minima to be almost all ones in binary. The window lemma
+  (Lemma~\ref{lem:window}) places the smallest element $n_1$ in an interval of width
+  about $2^{69.3}$.
+  \item \emph{Finite search} (Section~\ref{sec:search}). Every branch of a depth-first search
+  over the run lengths of $n_1$ forces at least $87$ low bits of $n_1$, and no integer in
+  the window has any of the forced patterns.
+\end{enumerate}
+
+We take the following as given.
+
+\begin{hypothesis}[Barina~\cite{barina}]\label{in:x0}
+Every positive integer $n < X_0 := 2075 \cdot 2^{60} \approx 2^{71.02}$ reaches $1$. The
+proof also goes through with $X_0 = 2^{71}$.
+\end{hypothesis}
+
+\begin{hypothesis}[Hercher~\cite{hercher}, Thm.~14]\label{in:thm14}
+For any $m_1 \ge 0$ consecutive local minima $n_i$ of a nontrivial cycle,
+$\sum T(n_i) < \dfrac{97 m_1 + 73}{54\, X_0}$.
+\end{hypothesis}
+
+\begin{hypothesis}[Hercher~\cite{hercher}, Thm.~21, with the corrigendum~\cite{hercher-corr}]\label{in:thm21}
+The $m_2$-window bound stated in Proposition~\ref{prop:thm21} below.
+\end{hypothesis}
+
+\begin{hypothesis}[Hercher~\cite{hercher}, Thm.~23]\label{in:hercher91}
+There is no nontrivial $m$-cycle with $m \le 91$.
+\end{hypothesis}
+
+\begin{hypothesis}[Simons--de Weger~\cite{sdw}, Thm.~3(d)]\label{in:sdw}
+For $91 \le m \le 515\,619$, every nontrivial $m$-cycle satisfies
+$7.5311\cdot 10^{11} < K < 1.4784\, m\, \delta^{m}$.
+\end{hypothesis}
+
+%======================================================================
+\section{Notation}\label{sec:notation}
+%======================================================================
+
+Let $C(n) = n/2$ for even $n$ and $C(n) = (3n+1)/2$ for odd $n$, and let
+$\delta = \log_2 3 \approx 1.58496$. A nontrivial cycle has $N = K + L$ elements, $K$ of
+them odd. Its elements split into $m$ runs. Run $i$ starts at a local minimum $n_i$ (odd),
+takes $k_i \ge 1$ steps $x \mapsto (3x+1)/2$ up to a peak, then $l_i \ge 1$ halvings
+down to $n_{i+1}$. Thus
+\[
+  \sum_{i=1}^{m} k_i = K, \qquad \sum_{i=1}^{m} l_i = L .
+\]
+Indices are cyclic, and we start at the \emph{smallest element of the cycle}, which is $n_1$.
+By Input~\ref{in:x0}, every element exceeds $X_0$.
+
+\begin{definition}
+For each local minimum $n_i$ set
+\begin{align*}
+  a_i &= (n_i+1)/2^{k_i} \quad (\text{odd, since the run has exactly } k_i \text{ odd steps}),\\
+  y_i &= \log_2(n_i+1), \qquad \alpha_i = \log_2 a_i = y_i - k_i \ \ge 0,\\
+  T(n_i) &= \sum_{t=0}^{k_i-1} \frac{1}{C^{t}(n_i)} \quad (\text{the sum of } 1/x \text{ over the odd elements of run } i),\\
+  G(n) &= \frac{\delta^{n}-1}{\delta-1}, \qquad\text{so } G(1)=1,\ \ G(n+1) = \delta\, G(n) + 1 .
+\end{align*}
+\end{definition}
+
+By Hercher's Lemma~8 the peak of run $i$ is $a_i 3^{k_i} - 1$. Hence
+$n_{i+1} = (a_i 3^{k_i} - 1)/2^{l_i}$, and taking logarithms,
+\begin{equation}\label{eq:step}
+  y_{i+1} = y_i + (\delta-1)k_i - l_i + \varepsilon_i,
+  \qquad
+  0 < \varepsilon_i = \log_2\!\Big(1 + \frac{2^{l_i}-1}{a_i 3^{k_i}}\Big) < \frac{1}{X_0 \ln 2} =: \epsmax .
+\end{equation}
+The bound on $\varepsilon_i$ uses $a_i 3^{k_i} > 2^{l_i} n_{i+1} \ge 2^{l_i} X_0$. Define the per-step loss
+\begin{equation}\label{eq:E}
+  E_i := \delta y_i - y_{i+1} = (\delta-1)\alpha_i + l_i - \varepsilon_i \ \ge\ 1 - \epsmax > 0 .
+\end{equation}
+Finally the \emph{gap} of the cycle is $g = N - K\delta$. Going once around the cycle gives
+\begin{equation}\label{eq:product}
+  2^{N} = \prod_{x \text{ odd in cycle}} \Big(3 + \frac{1}{x}\Big),
+  \qquad\text{hence}\qquad
+  \sum_{x \text{ odd}} \log\!\Big(1+\frac{1}{3x}\Big) = g \ln 2,
+\end{equation}
+and in particular $g > 0$.
+
+%======================================================================
+\section{Step 1: only \texorpdfstring{$\Kst$}{K*} is left for \texorpdfstring{$m = 92$}{m = 92}}\label{sec:reduction}
+%======================================================================
+
+From \eqref{eq:product} and $\log(1+u) < u$ we get Hercher's Theorem~16:
+\begin{equation}\label{eq:thm16}
+  0 < N - K\delta < \frac{1}{3\ln 2} \sum_{i=1}^{m} T(n_i).
+\end{equation}
+
+\begin{proposition}[Hercher, Thm.~21; Input~\ref{in:thm21}]\label{prop:thm21}
+Let $1 \le m_2 \le m$ satisfy
+$\dfrac{\delta^{m_2}-1}{\delta-1}\,\log_2\!\big(\tfrac{162}{97}X_0\big) \le \dfrac{m_2}{m}K$, and set
+$v = \dfrac{m_2}{m}\,K\,\dfrac{\delta-1}{\delta^{m_2}-1}$. Then
+$\sum_i T(n_i) < S(m_2, K)$, where
+\[
+  S(m_2,K) = \frac{97(m-m_2)+73}{54\,X_0} + \frac{3}{2^{v}-1} + \frac{3(m_2-1)}{(2^{v}-1)^{\delta}} .
+\]
+For $m_2 = m-1$ the first term may be replaced by $3/X_0$ (and $m_2 - 1$ by $m-2$), and for
+$m_2 = m$ it is $0$. Without any $m_2$ (Hercher's Cor.~17), $S = \tfrac{97}{54}\, m / X_0$.
+\end{proposition}
+
+\begin{remark}
+The original proof of Theorem~21 bounded $T$ for the later window minima using an upper bound on
+those minima, which cannot bound $T$ from above. The corrigendum~\cite{hercher-corr} (credited to
+X.~Wang) fixes this with a convexity argument. Set $x_i = \log_2(n_i+1)$, choose the window that
+maximizes $\sum x_i$, and maximize the convex, decreasing function $\sum 3/(2^{x_i}-1)$ over the
+resulting polyhedron. The maximum is at the vertex $(v, \delta v, \dots, \delta^{m_2-1} v)$.
+We checked this argument. The polyhedron is unbounded, but its recession directions are nonnegative
+(from $x_i \ge 1$) and the objective is nonincreasing along them, so the maximum is still attained
+at a vertex.
+\end{remark}
+
+Let $\eta(K) = \min_{m_2} S(m_2, K)/(3\ln 2)$ over the admissible choices. It is nonincreasing in $K$.
+
+\begin{proposition}\label{prop:reduction}
+Let $X_0 = 2075\cdot 2^{60}$ (or $2^{71}$) and $m = 92$. Every nontrivial $92$-cycle has
+$(K, N) = (\Kst, \Nst)$, where
+\[
+  \Kst = 205\,632\,218\,873\,398\,596\,256, \qquad
+  \Nst = \lceil \Kst \delta \rceil = 325\,919\,355\,854\,421\,968\,365,
+\]
+so $\Lst = \Nst - \Kst = 120\,287\,136\,981\,023\,372\,109$ and
+$g^{*} = \Nst - \Kst\delta = 1.2841\ldots \cdot 10^{-22}$. Moreover, $\Kst$ is a convergent
+denominator of $\delta$.
+\end{proposition}
+
+\begin{proof}
+\emph{Lower bound.} Start from $K_0 = 7\cdot 10^{11}$ (Input~\ref{in:sdw}). If $K \ge K_0$, then by
+\eqref{eq:thm16} and monotonicity $(K+L)/K \in (\delta, \delta + \eta(K_0)/K_0)$. So $K$ is at least the
+smallest denominator of a rational in that interval (Hercher's Lemma~22). Iterating, the bound
+stabilizes at $K \ge 2.0563\cdot 10^{20}$ for $m = 92$. At $X_0 = 704\cdot 2^{60}$ the same procedure
+reproduces every bound in Hercher's Theorem~23.
+
+\emph{Upper bound.} By Input~\ref{in:sdw}, $K < 1.4784\cdot 92\cdot\delta^{92} \approx 3.43\cdot 10^{20}$.
+That bound comes from Simons--de Weger's Lemma~7 and improves as $X_0$ grows, so it holds at the
+current $X_0$.
+
+\emph{Enumeration.} Let $p_a/q_a$ and $p_b/q_b$ be consecutive convergents of $\delta$ with
+$q_a \le 3.43\cdot 10^{20} < q_b$, and write $e_a = p_a - q_a\delta$ and $e_b = p_b - q_b\delta$.
+Since $\begin{psmallmatrix} q_a & q_b\\ p_a & p_b\end{psmallmatrix}$ is unimodular, each integer
+pair can be written uniquely as $(K, N) = (i q_a + j q_b,\ i p_a + j p_b)$ with $(i,j)\in\mathbb Z^2$,
+and then $N - K\delta = i e_a + j e_b$. The conditions
+\[
+  2.0563\cdot 10^{20} \le K \le 3.43\cdot 10^{20}, \qquad 0 < N - K\delta < \eta(K)
+\]
+cut out a thin parallelogram with $|j| \le K|e_a| + \eta\, q_a + 3$, and for each $j$ an
+$i$-interval of width $\eta/|e_a|$. Listing its lattice points and testing each against its own
+$\eta(K)$ leaves only $(\Kst, \Nst)$, with $\eta(\Kst) = 6.478\cdot 10^{-22}$ attained at $m_2 = 91$.
+\end{proof}
+
+\begin{remark}
+For $m = 93, \dots, 98$ the same enumeration leaves exactly the multiples $j\Kst$ with
+$j\Kst \le 1.4784\, m\, \delta^{m}$.
+\end{remark}
+
+%======================================================================
+\section{Step 2: two lemmas}\label{sec:lemmas}
+%======================================================================
+
+Both lemmas hold for every $m$-cycle. The numbers quoted are for $m = 92$, $K = \Kst$ and
+$X_0 = 2075\cdot 2^{60}$.
+
+\begin{lemma}[Budget identity]\label{lem:budget}
+For every $m$-cycle,
+\[
+  \sum_{i=1}^{m-1} G(m-i)\, E_i \;+\; \sum_{i=1}^{m} \alpha_i \;=\; G(m)\, y_1 - K .
+\]
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:E} and induction, $y_j = \delta^{j-1}y_1 - \sum_{i<j}\delta^{j-1-i}E_i$. Summing over
+$j = 1, \dots, m$ and using $\sum_{j=i+1}^{m}\delta^{j-1-i} = G(m-i)$ gives
+$\sum_j y_j = G(m)y_1 - \sum_{i<m} G(m-i)E_i$. Finally,
+$\sum_j y_j = \sum_j (k_j + \alpha_j) = K + \sum_j \alpha_j$.
+\end{proof}
+
+Every term on the left is nonnegative, so every partial sum is at most $G(m)y_1 - K$. For
+$m = 92$ and $K = \Kst$ we have $\kappa := K/G(92) = 47.69$, while $y_1 \approx 73$. In units of
+$G(92)$ the budget is therefore only about $y_1 - \kappa \approx 25$, and a single unit of $\alpha_1$
+alone costs $(\delta - 1)G(91)/G(92) \approx 0.37$.
+
+\begin{corollary}[Pruning test]\label{cor:prune}
+Fix the first $j$ runs $(k_i, l_i)_{i \le j}$ and put $o_i = \sum_{t<i}\big((\delta-1)k_t - l_t\big)$.
+By \eqref{eq:step}, $y_i \in [\,y_1 + o_i,\ y_1 + o_i + (i-1)\epsmax\,]$. A cycle with these runs
+exists only if some $y_1$ in the allowed window satisfies all of:
+\begin{enumerate}[label=(\roman*)]
+  \item $\alpha_i \ge 0$: \ $y_1 + o_i + (i-1)\epsmax \ge k_i$ for $i \le j$;
+  \item $n_i \ge n_1$: \ $o_i + (i-1)\epsmax \ge 0$ for $2 \le i \le \min(j+1, m)$;
+  \item the budget
+  \begin{multline*}
+    \sum_{\substack{i \le j\\ i \le m-1}} G(m-i)\Big[(\delta-1)(y_1 + o_i - k_i) + l_i - \epsmax\Big]
+    + \sum_{i \le j}(y_1 + o_i - k_i) \\
+    + \sum_{i=j+1}^{m-1} G(m-i)\,(1 - \epsmax)
+    \;\le\; G(m)\,y_1 - K .
+  \end{multline*}
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Condition (iii) is Lemma~\ref{lem:budget}, with each true $\alpha_i$ replaced by its lower bound
+$y_1 + o_i - k_i$ and each $E_i$ by the lower bound $(\delta-1)(y_1+o_i-k_i) + l_i - \epsmax$ from
+\eqref{eq:E}. The terms $i > j$ use $E_i \ge 1 - \epsmax$ and $\alpha_i \ge 0$. Conditions (i) and
+(ii) restate $\alpha_i \ge 0$ and the minimality of $n_1$.
+\end{proof}
+
+All three conditions are linear in $y_1$, so the feasible set is an interval. The test is monotone:
+a larger next $k$ only helps, and a larger next $l$ only hurts.
+
+\begin{corollary}[Later minima are large]\label{cor:later}
+For $2 \le j \le m$ let
+$B_j(y_1) = G(m)y_1 - K - \sum_{i=j}^{m-1}G(m-i)(1-\epsmax)$ and
+$\rho_j = \max_{i<j}\delta^{j-1-i}/G(m-i)$. Then
+\[
+  y_j \;\ge\; \max\!\big(y_1,\ \delta^{j-1}y_1 - \rho_j\, B_j(y_1)\big).
+\]
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:budget}, $\sum_{i<j}G(m-i)E_i \le B_j(y_1)$. Since every $E_i \ge 0$, we get
+$\sum_{i<j}\delta^{j-1-i}E_i \le \rho_j B_j(y_1)$. Now substitute into the expression for $y_j$ in the
+proof of Lemma~\ref{lem:budget}.
+\end{proof}
+
+On the final window for $y_1$ this gives $y_2 \ge 77.30$, $y_3 \ge 121.52$, $y_4 \ge 191.61$ and
+$y_5 \ge 302.70$.
+
+\begin{lemma}[Window for $n_1$]\label{lem:window}
+Let $A = 3g\ln 2$, $\Ahi = A/(1 - 1/(6X_0))$, $c = 1 - (2/3)^{k_1}$ and
+$R = \sum_{j=2}^{m} 3/n_j$. Then
+\[
+  \frac{3c}{\Ahi} - 1 \;\le\; n_1 \;\le\; \frac{3c}{A - R}.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $u = 1/(3x) \le 1/(3X_0)$. From \eqref{eq:product} and $u - u^2/2 \le \log(1+u) < u$ we get
+$A < \sum_{x\ \mathrm{odd}} 1/x \le \Ahi$, and $\sum_{x\ \mathrm{odd}} 1/x = \sum_i T(n_i)$.
+The odd elements of the run from $n$ are $(n+1)(3/2)^t - 1$ for $0 \le t < k$, and each lies in
+$[\,n(3/2)^t,\ (n+1)(3/2)^t\,]$. Hence
+\[
+  \frac{3c}{n+1} \le T(n) \le \frac{3c}{n},
+\]
+and $T(n_j) < 3/n_j$ for every $j$. Therefore $A - R < T(n_1) \le 3c/n_1$ and
+$3c/(n_1+1) \le T(n_1) \le \Ahi$.
+\end{proof}
+
+\begin{proposition}\label{prop:window}
+For $(m, K, L) = (92, \Kst, \Lst)$ we have $y_1 \in [71.019, 73.359]$, $R \le 0.060\,A$ on this
+range, and for each $k_1$ the window of Lemma~\ref{lem:window} has width at most about $2^{69.3}$.
+\end{proposition}
+
+\begin{proof}
+A first crude bound is $n_1 < 3m/A$ (from $\sum_i T(n_i) > A$ and $T(n_i) < 3/n_1$), so
+$y_1 \in [\log_2 X_0, 79.77]$. Corollary~\ref{cor:later} bounds $R$ on any subinterval $[a,b]$ of
+$y_1$-values, but it is weak for large $y_1$: above $y_1 \approx 75.6$ the budget is big enough
+to let $n_{92}$ be small again. So split the crude range into slices of width $0.02$, and discard
+a slice $[a,b]$ when $R(a,b) < A$ and $2^{a} - 1 > 3/(A - R(a,b))$, since Lemma~\ref{lem:window}
+excludes it. The slices that remain are exactly those in $[71.019, 73.359]$, and there
+$R \le 0.060A$.
+\end{proof}
+
+%======================================================================
+\section{Step 3: the search finds no possible \texorpdfstring{$n_1$}{n1}}\label{sec:search}
+%======================================================================
+
+A node of the search is a list of exact runs $(k_1,l_1),\dots,(k_j,l_j)$ together with the
+interval of $y_1$ left by Corollary~\ref{cor:prune}.
+
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Root.} For each $k_1 = 1, 2, \dots, \lfloor y_{1,\max}\rfloor + 1$, use the window of
+  Lemma~\ref{lem:window} for that $k_1$. Try $l_1 = 1, 2, \dots$, stopping at the first $l_1$ that
+  fails Corollary~\ref{cor:prune}.
+  \item \textbf{Node.} Let $k_{\min}$ be the least $k$ such that the runs plus $(k, 1)$ pass
+  Corollary~\ref{cor:prune}. Then the parity vector of $n_1$ must begin with the pattern
+  $1^{k_1}0^{l_1}\cdots 1^{k_j}0^{l_j}1^{k_{\min}}$, of length $P$.
+  \item \textbf{Leaf.} If $2^{P} \ge 4\cdot(\text{window width})$, then by Terras~\cite{terras} the pattern
+  fixes $n_1 \bmod 2^{P}$, and that residue class has at most one member in the window. Each
+  member is checked exactly: compute its orbit in big integers, rerun Corollary~\ref{cor:prune}
+  with the exact $y_i$, and test $A - R_{\mathrm{rest}} \le \sum_{i \le j} T(n_i) \le \Ahi$.
+  \item \textbf{Branch.} Otherwise, for each $k \ge k_{\min}$ that passes, try $l = 1, 2, \dots$
+  until Corollary~\ref{cor:prune} fails, and recurse.
+\end{enumerate}
+
+\begin{proposition}[Completeness]\label{prop:complete}
+If a $(K, L, m)$-cycle exists, its smallest element $n_1$ is checked exactly at some leaf.
+\end{proposition}
+
+\begin{proof}
+Every prefix of the actual runs of $n_1$ passes Corollary~\ref{cor:prune}. The loops over $l$
+stop only at a failure, and failure is monotone in $l$, so the root reaches the true
+$(k_1, l_1)$. At a node, the true next run length is at least $k_{\min}$: any smaller $k$ fails
+even with $l = 1$, hence for every $l$. So the parity vector of $n_1$ starts with the forced
+pattern, and $n_1$ is either listed at the leaf or followed into the matching branch. $P$ grows
+at every level, so the search ends.
+\end{proof}
+
+\begin{proposition}\label{prop:computation}
+For $(m, K, L) = (92, \Kst, \Lst)$ and $X_0 = 2075\cdot 2^{60}$, the search visits $1268$ nodes and
+ends in $1257$ leaves. The forced patterns have lengths $87 \le P \le 188$, and no integer in any
+window matches a forced pattern. The same holds for $X_0 = 2^{71}$.
+\end{proposition}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lr@{}}
+\toprule
+Quantity & Value \\
+\midrule
+Smallest $k_1$ passing Corollary~\ref{cor:prune} & $9$ \\
+Search nodes visited & $1268$ \\
+Leaves (forced patterns) & $1257$ \\
+Forced pattern length $P$ & $87$ to $188$ bits \\
+Window width for $n_1$ & $\approx 2^{69.3}$ \\
+Expected candidates $\sum \text{width}/2^{P}$ & $3.4\cdot 10^{-4}$ \\
+Integers $n_1$ found in a window & $\mathbf{0}$ \\
+Run time (Python, Decimal at 120 digits) & 12\,s \\
+\bottomrule
+\end{tabular}
+\caption{The search for $(m, K, L) = (92, \Kst, \Lst)$.}
+\end{table}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By Proposition~\ref{prop:reduction}, a $92$-cycle must have $(K, L) = (\Kst, \Lst)$. By
+Propositions~\ref{prop:complete} and~\ref{prop:computation}, no such cycle exists. Input~\ref{in:hercher91}
+covers $m \le 91$.
+\end{proof}
+
+\begin{remark}[Larger $m$]
+For $m = 93, \dots, 98$ the method rules out only the largest surviving multiple in each case:
+$2\Kst$ for $m=93$, $3\Kst$ for $m=94$, $4\Kst$ for $m=95$, and $6\Kst$ for $m=96$ (eight candidates,
+all failing Corollary~\ref{cor:prune} at the third minimum). For the smaller multiples $\kappa$ is
+well below $y_1$, so Corollary~\ref{cor:later} is too weak to give $R < A$, and the window of
+Lemma~\ref{lem:window} never closes.
+\end{remark}
+
+%======================================================================
+\section{Validation and known limitations}\label{sec:validation}
+%======================================================================
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{4.3cm}>{\raggedright\arraybackslash}p{5.2cm}@{}}
+\toprule
+Check & What it tests & Outcome \\
+\midrule
+Hercher's numbers at $X_0 = 704\cdot 2^{60}$ & Step~1 chain (Thm.~21 transcription, Lemma~22) & Reproduces $m \le 91$ and every bound in Thm.~23 \\
+Remark~28 threshold; Breeden's bound & Continued-fraction code & Exact: $2835$ vs.\ $2836\cdot 2^{60}$; $K \ge 72\,057\,431\,991$ \\
+Lattice enumeration vs.\ brute force & Completeness of Step~1 & 40 random cases, identical sets \\
+Toy search vs.\ brute force & Completeness of Step~3 (Cor.~\ref{cor:prune} + search) & 6 cases, $m = 3$--$6$, $n_1 \le 2^{21}$: identical sets \\
+Weakened budget, real window & Leaf listing and exact checks at full scale & $0.92\Kst$: 4 candidates; $0.90\Kst$: 9 candidates; all eliminated \\
+Corrigendum to Thm.~21 & The convexity argument & Checked by hand (see the remark in Section~\ref{sec:reduction}) \\
+\bottomrule
+\end{tabular}
+\caption{Checks performed.}
+\end{table}
+
+\begin{itemize}
+  \item \textbf{Floating-point rigor.} Real quantities use Python \texttt{Decimal} at $120$--$150$
+  digits, with every rounding pushed toward keeping candidates. No step has been redone in exact
+  rational or interval arithmetic.
+  \item \textbf{Lemma~\ref{lem:window} is not covered by the toy test.} It is cycle-specific and
+  is checked only by its proof.
+  \item \textbf{Inherited computations.} Step~1 relies on Barina's verification, Hercher's
+  Theorem~14 case analysis, and the Simons--de Weger computations.
+  \item \textbf{Possible prior work.} A ResearchGate item titled ``Non-existence of Collatz
+  $m$-cycles for $m \le 95$'' exists but could not be opened.
+\end{itemize}
+
+%======================================================================
+\section{Reproduction}\label{sec:repro}
+%======================================================================
+
+All code is in \texttt{collatz/tools/}, in pure Python~3 with no dependencies.
+\begin{center}
+\scriptsize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Command & Expected output \\
+\midrule
+\texttt{python3 cycle\_bounds.py selftest} & ``published numbers reproduced'' \\
+\texttt{python3 cycle\_bounds.py mcycles --x0 704 --mmax 95 --k0 700000000000} & ``No m-cycles for all m <= 91'' \\
+\texttt{python3 cycle\_bounds.py survivors --x0 2075 --mmin 92 --mmax 98} & one survivor, $\Kst$, for $m = 92$ \\
+\texttt{python3 test\_kstar\_sieve.py} & ``sieve never missed a brute-force hit'' \\
+\texttt{python3 kstar\_sieve.py --m 92 -v} & ``SURVIVORS: 0'' \\
+\texttt{python3 run\_kstar\_all.py --x0 2048 --mmin 92 --mmax 92} & ``ALL RULED OUT'' \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+{\raggedright
+\begin{thebibliography}{9}
+\bibitem{barina} D.~Barina, \emph{Improved verification limit for the convergence of the Collatz
+conjecture}, J.\ Supercomputing (2025), \url{https://doi.org/10.1007/s11227-025-07337-0}; project page
+\url{https://pcbarina.fit.vutbr.cz/}.
+\bibitem{hercher} C.~Hercher, \emph{There are no Collatz $m$-cycles with $m \le 91$}, J.\ Integer Seq.\
+\textbf{26} (2023), Art.\ 23.3.5, \url{https://arxiv.org/abs/2201.00406}.
+\bibitem{hercher-corr} C.~Hercher, \emph{Corrigendum to Article 23.3.5},
+\url{https://cs.uwaterloo.ca/journals/JIS/VOL26/Hercher/corrigendum.pdf}.
+\bibitem{sdw} J.~Simons and B.~de~Weger, \emph{Theoretical and computational bounds for $m$-cycles of the
+$3n+1$ problem}, Acta Arith.\ \textbf{117} (2005), 51--70; updated version 1.44 (2010),
+\url{https://math.deweger.net/papers/}.
+\bibitem{terras} R.~Terras, \emph{A stopping time problem on the positive integers}, Acta Arith.\
+\textbf{30} (1976), 241--252.
+\end{thebibliography}
+}
+
+\end{document}

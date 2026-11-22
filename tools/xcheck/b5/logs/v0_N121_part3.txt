@@ -1,0 +1,2 @@
+HIT total=143 k0=37 l0=1 k1=14 l1=1 k2=75 l2=1 k3=5 l3=1 k4max=12
+SUMMARY N=121 T=143 KMAX=139 w=26 ID=3 NW=8 right=22349 left=506202291 matches=82908861 hits=1 max_total=143 at (37,1,14,1,75,1,5,1)

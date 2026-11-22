@@ -1,0 +1,5 @@
+HIT total=143 k0=26 l0=1 k1=69 l1=2 k2=6 l2=1 k3=11 l3=1 k4max=31
+HIT total=143 k0=27 l0=2 k1=68 l1=2 k2=6 l2=1 k3=11 l3=1 k4max=31
+HIT total=143 k0=37 l0=1 k1=14 l1=1 k2=75 l2=1 k3=5 l3=1 k4max=12
+HIT total=143 k0=38 l0=2 k1=13 l1=1 k2=75 l2=1 k3=5 l3=1 k4max=12
+SUMMARY N=121 T=143 KMAX=139 w=26 threads=1 right=22349 left=4050849643 matches=645040792 hits=4 bad=0 max_total=143 at (26,1,69,2,6,1,11,1)

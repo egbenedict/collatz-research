@@ -1,0 +1,45 @@
+System T-t2: 10 rules; YAH status: P
+  ob1: SN of 7 rules (R minus Bf)
+    [ob1] ext nat d=1 w=1: sat (0.1s, 138v/430c, cadical195#0) removes ['f>->>']
+    [ob1] ext nat d=1 w=1: sat (0.1s, 124v/383c, cadical195#0) removes ['t>->2>']
+    [ob1] ext nat d=1 w=1: unsat (0.1s, 102v/315c, cadical195#0)
+    [ob1] ext arc d=1 w=1: unsat (0.1s, 166v/487c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.2s, 455v/1451c, cadical195#0) removes ['f0->0f', 'f1->0t', 'f2->1f', 't0->1t']
+    [ob1] ext nat d=1 w=1: sat (0.2s, 28v/72c, cadical195#0) removes ['t1->2f']
+  ob2: SN of 8 rules (R minus De)
+    [ob2] ext nat d=1 w=1: sat (0.1s, 181v/572c, cadical195#0) removes ['<0-><t', '<1-><ff', '<2-><ft']
+    [ob2] ext nat d=1 w=1: unsat (0.1s, 102v/315c, cadical195#0)
+    [ob2] ext arc d=1 w=1: unsat (0.2s, 166v/487c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.1s, 455v/1451c, cadical195#0) removes ['f0->0f', 'f1->0t', 'f2->1f', 't0->1t']
+    [ob2] ext nat d=1 w=1: sat (0.1s, 28v/72c, cadical195#0) removes ['t1->2f']
+  ob3-fwd: SN(H_top / R) with H = ['<0-><t', '<1-><ff', '<2-><ft']
+    [ob3-fwd] top nat d=1 w=1: unsat (0.1s, 217v/680c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=1: unsat (0.1s, 407v/1221c, cadical195#0)
+    [ob3-fwd] top nat d=1 w=2: unsat (0.2s, 1076v/3482c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=2: unsat (0.1s, 791v/2471c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=1: unsat (0.2s, 1379v/4470c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=1: unsat (0.2s, 2027v/6132c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=2: unsat (3.2s, 7422v/24841c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=2: sat (0.2s, 4233v/13174c, cadical195#0) removes ['<0-><t']
+    [ob3-fwd] top nat d=1 w=1: unsat (0.1s, 217v/680c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=1: unsat (0.2s, 407v/1221c, cadical195#0)
+    [ob3-fwd] top nat d=1 w=2: unsat (0.2s, 1076v/3482c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=2: unsat (0.2s, 791v/2471c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=1: unsat (0.2s, 1379v/4470c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=1: unsat (0.2s, 2027v/6132c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=2: unsat (3.0s, 7422v/24841c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=2: sat (0.4s, 4233v/13174c, cadical195#0) removes ['<2-><ft']
+    [ob3-fwd] top nat d=1 w=1: unsat (0.1s, 217v/680c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=1: unsat (0.2s, 407v/1221c, cadical195#0)
+    [ob3-fwd] top nat d=1 w=2: unsat (0.2s, 1076v/3482c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=2: unsat (0.1s, 791v/2471c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=1: unsat (0.2s, 1379v/4470c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=1: unsat (0.2s, 2027v/6132c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=2: unsat (2.5s, 7422v/24841c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=2: unsat (0.3s, 4233v/13174c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=3: unsat (0.7s, 6949v/22252c, cadical195#0)
+    [ob3-fwd] top nat d=3 w=1: unsat (1.7s, 4787v/15811c, cadical195#0)
+    [ob3-fwd] top arc d=3 w=1: unsat (1.4s, 5290v/16680c, cadical195#0)
+    [ob3-fwd] top arc d=3 w=2: sat (0.3s, 11510v/36948c, cadical195#0) removes ['<1-><ff']
+  ==> SN(T-t2) PROVED (direction fwd)
+  proof written to tools/rewriting/proofs/T-t2.json (18.2s total)

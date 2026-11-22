@@ -1,0 +1,36 @@
+name: Rewriting termination search (system H)
+
+# Matrix-interpretation SAT search for termination of the accelerated system H (ideas/log.md I-015).
+# One job per interpretation shape. Any proof found is re-checked by check.py before upload.
+
+on:
+  workflow_dispatch:
+    inputs:
+      system:  { description: "system name in srs.py", default: "H" }
+      timeout: { description: "seconds per SAT query", default: "3600" }
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        config: ["arc:4:2", "nat:4:2", "arc:4:3", "arc:5:2"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install "python-sat>=1.8.dev0" z3-solver
+      - name: search
+        working-directory: tools/rewriting
+        shell: bash
+        run: |
+          mkdir -p ci_out
+          before=$(ls proofs | sort)
+          python prover.py ${{ inputs.system }} --configs ${{ matrix.config }} --timeout ${{ inputs.timeout }} --jobs 4 2>&1 | tee ci_out/search.log
+          new=$(comm -13 <(echo "$before") <(ls proofs | sort))
+          if [ -n "$new" ]; then for f in $new; do cp "proofs/$f" ci_out/; python check.py "proofs/$f" | tee -a ci_out/search.log; done; else echo "no new proof" | tee -a ci_out/search.log; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: "H-${{ strategy.job-index }}", path: tools/rewriting/ci_out }

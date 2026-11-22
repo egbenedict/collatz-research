@@ -1,0 +1,93 @@
+B5 table (own): {73: 91, 74: 91, 79: 101, 114: 137, 116: 139, 119: 141, 120: 143, 121: 143, 122: 145, 124: 146, 128: 152, 130: 152, 132: 158, 199: 225}
+m=92: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 22, 2: 22, 3: 24, 4: 18, 5: 5}
+m= 92: Kceil=4.7224e+21, 66 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=93: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 23, 2: 21, 3: 25, 4: 17, 5: 6}
+m= 93: Kceil=9.4447e+21, 67 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=94: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 24, 2: 21, 3: 25, 4: 17, 5: 6}
+m= 94: Kceil=1.8889e+22, 68 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=95: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 25, 2: 21, 3: 24, 4: 18, 5: 6}
+m= 95: Kceil=1.8889e+22, 68 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=96: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 26, 2: 21, 3: 24, 4: 19, 5: 5}
+m= 96: Kceil=3.7779e+22, 69 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=97: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 27, 2: 21, 3: 24, 4: 18, 5: 6}
+m= 97: Kceil=7.5558e+22, 70 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=98: hard shape K=2.744e19 ratio 0.0000000, rule use {1: 28, 2: 22, 3: 25, 4: 18, 5: 4}
+m= 98: Kceil=7.5558e+22, 70 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=99: hard shape K=2.744e19 ratio 0.0000001, rule use {1: 29, 2: 22, 3: 25, 4: 18, 5: 4}
+m= 99: Kceil=1.5112e+23, 71 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=100: hard shape K=2.744e19 ratio 0.0000001, rule use {1: 30, 2: 22, 3: 25, 4: 18, 5: 4}
+m=100: Kceil=3.0223e+23, 72 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=101: hard shape K=2.744e19 ratio 0.0000001, rule use {1: 31, 2: 22, 3: 26, 4: 17, 5: 4}
+m=101: Kceil=3.0223e+23, 72 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=102: hard shape K=2.744e19 ratio 0.0000002, rule use {1: 32, 2: 22, 3: 26, 4: 17, 5: 4}
+m=102: Kceil=6.0446e+23, 73 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=103: hard shape K=2.744e19 ratio 0.0000004, rule use {1: 33, 2: 22, 3: 26, 4: 17, 5: 4}
+m=103: Kceil=1.2089e+24, 74 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=104: hard shape K=2.744e19 ratio 0.0000006, rule use {1: 34, 2: 22, 3: 26, 4: 17, 5: 4}
+m=104: Kceil=1.2089e+24, 74 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=105: hard shape K=2.744e19 ratio 0.0000009, rule use {1: 35, 2: 23, 3: 26, 4: 16, 5: 4}
+m=105: Kceil=2.4179e+24, 75 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=106: hard shape K=2.744e19 ratio 0.0000015, rule use {1: 37, 2: 23, 3: 25, 4: 16, 5: 4}
+m=106: Kceil=4.8357e+24, 76 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=107: hard shape K=2.744e19 ratio 0.0000023, rule use {1: 39, 2: 21, 3: 26, 4: 15, 5: 5}
+m=107: Kceil=4.8357e+24, 76 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=108: hard shape K=2.744e19 ratio 0.0000037, rule use {1: 40, 2: 21, 3: 26, 4: 15, 5: 5}
+m=108: Kceil=9.6714e+24, 77 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=109: hard shape K=2.744e19 ratio 0.0000058, rule use {1: 41, 2: 21, 3: 26, 4: 15, 5: 5}
+m=109: Kceil=1.9343e+25, 78 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=110: hard shape K=2.744e19 ratio 0.0000092, rule use {1: 42, 2: 21, 3: 26, 4: 15, 5: 5}
+m=110: Kceil=3.8686e+25, 79 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=111: hard shape K=2.744e19 ratio 0.0000146, rule use {1: 43, 2: 21, 3: 26, 4: 15, 5: 5}
+m=111: Kceil=3.8686e+25, 79 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=112: hard shape K=2.744e19 ratio 0.0000232, rule use {1: 44, 2: 21, 3: 27, 4: 13, 5: 6}
+m=112: Kceil=7.7371e+25, 80 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=113: hard shape K=2.744e19 ratio 0.0000367, rule use {1: 45, 2: 21, 3: 27, 4: 13, 5: 6}
+m=113: Kceil=1.5474e+26, 81 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=114: hard shape K=2.744e19 ratio 0.0000582, rule use {1: 46, 2: 20, 3: 28, 4: 13, 5: 6}
+m=114: Kceil=1.5474e+26, 81 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=115: hard shape K=2.744e19 ratio 0.0000923, rule use {1: 47, 2: 20, 3: 27, 4: 14, 5: 6}
+m=115: Kceil=3.0949e+26, 82 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=116: hard shape K=2.744e19 ratio 0.0001463, rule use {1: 48, 2: 20, 3: 27, 4: 14, 5: 6}
+m=116: Kceil=6.1897e+26, 83 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=117: hard shape K=2.744e19 ratio 0.0002318, rule use {1: 49, 2: 20, 3: 27, 4: 14, 5: 6}
+m=117: Kceil=6.1897e+26, 83 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=118: hard shape K=2.744e19 ratio 0.0003674, rule use {1: 50, 2: 20, 3: 27, 4: 14, 5: 6}
+m=118: Kceil=1.2379e+27, 84 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=119: hard shape K=2.744e19 ratio 0.0005824, rule use {1: 51, 2: 20, 3: 27, 4: 14, 5: 6}
+m=119: Kceil=2.4759e+27, 85 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=120: hard shape K=2.744e19 ratio 0.0009230, rule use {1: 53, 2: 19, 3: 25, 4: 16, 5: 6}
+m=120: Kceil=2.4759e+27, 85 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=121: hard shape K=2.744e19 ratio 0.0014630, rule use {1: 54, 2: 19, 3: 25, 4: 16, 5: 6}
+m=121: Kceil=4.9518e+27, 86 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=122: hard shape K=2.744e19 ratio 0.0023188, rule use {1: 55, 2: 19, 3: 25, 4: 16, 5: 6}
+m=122: Kceil=9.9035e+27, 87 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=123: hard shape K=2.744e19 ratio 0.0036752, rule use {1: 56, 2: 19, 3: 25, 4: 16, 5: 6}
+m=123: Kceil=9.9035e+27, 87 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=124: hard shape K=2.744e19 ratio 0.0058250, rule use {1: 57, 2: 19, 3: 25, 4: 16, 5: 6}
+m=124: Kceil=1.9807e+28, 88 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=125: hard shape K=2.744e19 ratio 0.0092325, rule use {1: 58, 2: 19, 3: 25, 4: 16, 5: 6}
+m=125: Kceil=3.9614e+28, 89 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=126: hard shape K=2.744e19 ratio 0.0146331, rule use {1: 59, 2: 19, 3: 25, 4: 16, 5: 6}
+m=126: Kceil=3.9614e+28, 89 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
+m=127: hard shape K=2.744e19 ratio 0.0231929, rule use {1: 60, 2: 19, 3: 25, 4: 16, 5: 6}
+m=127: Kceil=7.9228e+28, 90 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=128: hard shape K=2.744e19 ratio 0.0367599, rule use {1: 61, 2: 19, 3: 25, 4: 16, 5: 6}
+m=128: Kceil=1.5846e+29, 91 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=129: hard shape K=2.744e19 ratio 0.0582631, rule use {1: 62, 2: 19, 3: 25, 4: 16, 5: 6}
+m=129: Kceil=1.5846e+29, 90 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=130: hard shape K=2.744e19 ratio 0.0923448, rule use {1: 63, 2: 19, 3: 25, 4: 16, 5: 6}
+m=130: Kceil=3.1691e+29, 91 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=131: hard shape K=2.744e19 ratio 0.1463630, rule use {1: 64, 2: 19, 3: 25, 4: 16, 5: 6}
+m=131: Kceil=6.3383e+29, 92 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=132: hard shape K=2.744e19 ratio 0.2319799, rule use {1: 65, 2: 19, 3: 25, 4: 16, 5: 6}
+m=132: Kceil=6.3383e+29, 92 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=133: hard shape K=2.744e19 ratio 0.3676794, rule use {1: 67, 2: 19, 3: 25, 4: 15, 5: 6}
+m=133: Kceil=1.2677e+30, 93 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=134: hard shape K=2.744e19 ratio 0.5827581, rule use {1: 68, 2: 19, 3: 25, 4: 15, 5: 6}
+m=134: Kceil=2.5353e+30, 94 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [4s]
+m=135: hard shape K=2.744e19 ratio 0.9236498, rule use {1: 69, 2: 19, 3: 25, 4: 15, 5: 6}
+m=135: Kceil=2.5353e+30, 94 K-ranges, 3 dangerous candidates tested, 0 open, worst chain ratio 0.9236498 at K=27444133206411171953  [4s]
+m=136: hard shape K=2.744e19 ratio 1.4639502, rule use {1: 70, 2: 19, 3: 26, 4: 14, 5: 6}
+m=136: Kceil=5.0706e+30, 95 K-ranges, 4 dangerous candidates tested, 2 open, worst chain ratio 1.4639502 at K=27444133206411171953  [4s]
+   OPEN: (27444133206411171953, 43497921996957973433, 'chain (m2=85, Y0=72.0932, use={1: 70, 2: 19, 3: 26, 4: 14, 5: 6})', 1.4639502441984478)
+   OPEN: (205632218873398596256, 325919355854421968365, 'chain (m2=90, Y0=78.7961, use={1: 66, 2: 22, 3: 30, 4: 13, 5: 4})', 1.2243275884657796)

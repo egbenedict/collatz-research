@@ -1,0 +1,53 @@
+System ODD8_5-tft>-ttt>: 18 rules; YAH status: N
+  ob1: SN of 13 rules (R minus Bf)
+    [ob1] ext nat d=1 w=1: sat (0.0s, 337v/1078c, cadical195#0) removes ['f>->>']
+    [ob1] ext nat d=1 w=1: sat (0.0s, 323v/1031c, cadical195#0) removes ['fft>->ff3>', 'ftt>->ft3>']
+    [ob1] ext nat d=1 w=1: unsat (0.0s, 197v/622c, cadical195#0)
+    [ob1] ext arc d=1 w=1: unsat (0.0s, 320v/958c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.0s, 894v/2882c, cadical195#0) removes ['f0->0f', 'f1->0t', 'f2->1f', 'f4->2f', 't0->2t', 't1->3f', 't2->3t', 't3->4f']
+    [ob1] ext nat d=1 w=1: sat (0.0s, 46v/126c, cadical195#0) removes ['f3->1t']
+    [ob1] ext nat d=1 w=1: unsat (0.0s, 20v/56c, cadical195#0)
+    [ob1] ext arc d=1 w=1: unsat (0.0s, 34v/92c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.0s, 83v/252c, cadical195#0) removes ['t4->4t']
+  ob2: SN of 15 rules (R minus De)
+    [ob2] ext nat d=1 w=1: sat (0.0s, 359v/1153c, cadical195#0) removes ['<0-><ft', '<1-><tf', '<2-><tt', '<3-><fff', '<4-><fft']
+    [ob2] ext nat d=1 w=1: unsat (0.0s, 197v/622c, cadical195#0)
+    [ob2] ext arc d=1 w=1: unsat (0.0s, 320v/958c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.0s, 894v/2882c, cadical195#0) removes ['f0->0f', 'f1->0t', 'f2->1f', 'f4->2f', 't0->2t', 't1->3f', 't2->3t', 't3->4f']
+    [ob2] ext nat d=1 w=1: sat (0.0s, 46v/126c, cadical195#0) removes ['f3->1t']
+    [ob2] ext nat d=1 w=1: unsat (0.0s, 20v/56c, cadical195#0)
+    [ob2] ext arc d=1 w=1: unsat (0.0s, 34v/92c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.0s, 83v/252c, cadical195#0) removes ['t4->4t']
+  ob3-fwd: SN(H_top / R) with H = ['<0-><ft', '<1-><tf', '<2-><tt', '<3-><fff', '<4-><fft']
+    [ob3-fwd] top nat d=1 w=1: unsat (0.0s, 499v/1600c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=1: unsat (0.0s, 927v/2845c, cadical195#0)
+    [ob3-fwd] top nat d=1 w=2: unsat (0.1s, 3236v/10703c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=2: unsat (0.0s, 1913v/6109c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=1: unsat (0.1s, 4190v/13851c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=1: unsat (0.1s, 5052v/15462c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=2: unsat (12.9s, 25284v/85563c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=2: unsat (1.0s, 11017v/34775c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=3: unsat (2.9s, 18522v/60240c, cadical195#0)
+    [ob3-fwd] top nat d=3 w=1: unsat (11.0s, 16713v/56017c, cadical195#0)
+    [ob3-fwd] top arc d=3 w=1: unsat (22.9s, 13489v/42863c, cadical195#0)
+    [ob3-fwd] top arc d=3 w=2: unknown (60.1s, 30466v/98928c, timeout)
+    [ob3-fwd] top nat d=3 w=2: unknown (60.4s, 87858v/299107c, timeout)
+    [ob3-fwd] top arc d=3 w=3: unknown (60.2s, 52129v/173725c, timeout)
+  ob3-fwd: no proof within configs
+  ob3-rev: SN(H_top / R) with H = ['>f->>', '>tff->>3ff', '>ttf->>3tf']
+    [ob3-rev] top nat d=1 w=1: unsat (0.0s, 486v/1557c, cadical195#0)
+    [ob3-rev] top arc d=1 w=1: unsat (0.0s, 898v/2758c, cadical195#0)
+    [ob3-rev] top nat d=1 w=2: unsat (0.0s, 3135v/10360c, cadical195#0)
+    [ob3-rev] top arc d=1 w=2: unsat (0.0s, 1850v/5915c, cadical195#0)
+    [ob3-rev] top nat d=2 w=1: unsat (0.1s, 4029v/13310c, cadical195#0)
+    [ob3-rev] top arc d=2 w=1: unsat (0.1s, 4809v/14721c, cadical195#0)
+    [ob3-rev] top nat d=2 w=2: unsat (6.7s, 24074v/81427c, cadical195#0)
+    [ob3-rev] top arc d=2 w=2: unsat (0.5s, 10463v/33042c, cadical195#0)
+    [ob3-rev] top arc d=2 w=3: unsat (1.2s, 17571v/57175c, cadical195#0)
+    [ob3-rev] top nat d=3 w=1: unsat (4.3s, 15978v/53527c, cadical195#0)
+    [ob3-rev] top arc d=3 w=1: unsat (6.4s, 12793v/40637c, cadical195#0)
+    [ob3-rev] top arc d=3 w=2: unknown (60.1s, 28846v/93672c, timeout)
+    [ob3-rev] top nat d=3 w=2: unknown (60.7s, 83421v/283909c, timeout)
+    [ob3-rev] top arc d=3 w=3: unknown (60.3s, 49321v/164389c, timeout)
+  ob3-rev: no proof within configs
+  result: False (432.6s total)

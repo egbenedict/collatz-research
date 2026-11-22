@@ -1,0 +1,35 @@
+System ODD4-ft>: 11 rules; YAH status: P
+  ob1: SN of 8 rules (R minus Bf)
+    [ob1] ext nat d=1 w=1: sat (0.0s, 170v/535c, cadical195#0) removes ['f>->>']
+    [ob1] ext nat d=1 w=1: sat (0.0s, 156v/488c, cadical195#0) removes ['tt>->2t>']
+    [ob1] ext nat d=1 w=1: unsat (0.0s, 118v/368c, cadical195#0)
+    [ob1] ext arc d=1 w=1: unsat (0.0s, 192v/568c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.0s, 530v/1700c, cadical195#0) removes ['f0->0f', 'f2->1f', 't0->1t', 't1->2f']
+    [ob1] ext nat d=1 w=1: sat (0.0s, 46v/126c, cadical195#0) removes ['f1->0t']
+    [ob1] ext nat d=1 w=1: unsat (0.0s, 20v/56c, cadical195#0)
+    [ob1] ext arc d=1 w=1: unsat (0.0s, 34v/92c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.0s, 83v/252c, cadical195#0) removes ['t2->2t']
+  ob2: SN of 9 rules (R minus De)
+    [ob2] ext nat d=1 w=1: sat (0.0s, 197v/625c, cadical195#0) removes ['<0-><t', '<1-><ff', '<2-><ft']
+    [ob2] ext nat d=1 w=1: unsat (0.0s, 118v/368c, cadical195#0)
+    [ob2] ext arc d=1 w=1: unsat (0.0s, 192v/568c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.0s, 530v/1700c, cadical195#0) removes ['f0->0f', 'f2->1f', 't0->1t', 't1->2f']
+    [ob2] ext nat d=1 w=1: sat (0.0s, 46v/126c, cadical195#0) removes ['f1->0t']
+    [ob2] ext nat d=1 w=1: unsat (0.0s, 20v/56c, cadical195#0)
+    [ob2] ext arc d=1 w=1: unsat (0.0s, 34v/92c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.0s, 83v/252c, cadical195#0) removes ['t2->2t']
+  ob3-fwd: SN(H_top / R) with H = ['<0-><t', '<1-><ff', '<2-><ft']
+    [ob3-fwd] top nat d=1 w=1: unsat (0.0s, 249v/785c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=1: unsat (0.0s, 465v/1403c, cadical195#0)
+    [ob3-fwd] top nat d=1 w=2: unsat (0.0s, 1317v/4290c, cadical195#0)
+    [ob3-fwd] top arc d=1 w=2: unsat (0.0s, 917v/2880c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=1: unsat (0.0s, 1705v/5562c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=1: unsat (0.1s, 2368v/7192c, cadical195#0)
+    [ob3-fwd] top nat d=2 w=2: unsat (3.8s, 9414v/31617c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=2: unsat (0.4s, 4993v/15604c, cadical195#0)
+    [ob3-fwd] top arc d=2 w=3: unsat (1.0s, 8240v/26500c, cadical195#0)
+    [ob3-fwd] top nat d=3 w=1: unsat (6.2s, 6136v/20365c, cadical195#0)
+    [ob3-fwd] top arc d=3 w=1: unsat (6.9s, 6210v/19636c, cadical195#0)
+    [ob3-fwd] top arc d=3 w=2: unknown (60.1s, 13627v/43891c, timeout)
+    [ob3-fwd] top nat d=3 w=2: unknown (60.1s, 31359v/106231c, timeout)
+    [ob3-fwd] top arc d=3 w=3: unknown (60.1s, 22946v/75748c, timeout)

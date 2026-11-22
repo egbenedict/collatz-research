@@ -1,0 +1,8 @@
+B4(72) = 86  table 86  OK  witness n has 71 bits, runs (10, 3, 36, 1, 6, 5)  [176.3s]
+B4(73) = 87  table 87  OK  witness n has 73 bits, runs (10, 5, 10, 6, 25, 1)  [191.4s]
+B4(74) = 89  table 89  OK  witness n has 74 bits, runs (18, 3, 8, 6, 39, 6)  [201.7s]
+B4(76) = 91  table 91  OK  witness n has 76 bits, runs (13, 1, 24, 1, 1, 4)  [240.7s]
+B4(78) = 91  table 91  OK  witness n has 76 bits, runs (13, 1, 24, 1, 1, 4)  [279.7s]
+B4(79) = 93  table 93  OK  witness n has 79 bits, runs (18, 1, 51, 1, 8, 3)  [310.0s]
+B4(80) = 95  table 95  OK  witness n has 80 bits, runs (9, 4, 51, 1, 12, 1)  [326.3s]
+7 points, 0 unsafe, 1726s

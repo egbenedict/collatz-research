@@ -1,0 +1,14 @@
+c=5 full set [189, 192, 193, 195, 197, 198, 199, 203, 205, 210, 213, 220]: closed worst 0.9236
+  drop 189: closed (worst 0.9236)
+  drop 192: closed (worst 0.9236)
+  drop 193: closed (worst 0.9236)
+  drop 195: closed (worst 0.9236)
+  drop 197: closed (worst 0.9236)
+  drop 198: closed (worst 0.9236)
+  drop 199: needed (worst 1.4639)
+  drop 203: closed (worst 0.9236)
+  drop 205: closed (worst 0.9236)
+  drop 210: closed (worst 0.9236)
+  drop 213: closed (worst 0.9236)
+  drop 220: closed (worst 0.9236)
+c=5 minimal greedy set: [199] -> hypothetical values [226]

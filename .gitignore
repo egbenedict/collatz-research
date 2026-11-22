@@ -1,0 +1,12 @@
+# third-party papers: not redistributable; see sources/bibliography.md for links
+sources/pdfs/
+# environments, caches, build outputs
+**/.venv/
+**/__pycache__/
+*.pyc
+.DS_Store
+tools/xcheck/b4mitm
+tools/xcheck/b5/b5mitm
+tools/xcheck/b5/b5mitm_v0
+tools/density/predcount
+tools/parity/*.o

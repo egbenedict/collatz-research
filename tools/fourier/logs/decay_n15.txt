@@ -1,0 +1,32 @@
+n= 1  max|phi|=5.773503e-01  at xi=1  (xi*2 mod 3^n etc. are symmetric)
+n= 2  max|phi|=3.779236e-01  at xi=4  (xi*2 mod 3^n etc. are symmetric)
+n= 3  max|phi|=2.522368e-01  at xi=8  (xi*2 mod 3^n etc. are symmetric)
+n= 4  max|phi|=1.769989e-01  at xi=16  (xi*2 mod 3^n etc. are symmetric)
+n= 5  max|phi|=1.292736e-01  at xi=32  (xi*2 mod 3^n etc. are symmetric)
+n= 6  max|phi|=9.610639e-02  at xi=64  (xi*2 mod 3^n etc. are symmetric)
+n= 7  max|phi|=7.587004e-02  at xi=256  (xi*2 mod 3^n etc. are symmetric)
+n= 8  max|phi|=6.089074e-02  at xi=6049  (xi*2 mod 3^n etc. are symmetric)
+n= 9  max|phi|=4.802615e-02  at xi=1024  (xi*2 mod 3^n etc. are symmetric)
+n=10  max|phi|=3.827832e-02  at xi=4096  (xi*2 mod 3^n etc. are symmetric)
+n=11  max|phi|=3.194419e-02  at xi=8192  (xi*2 mod 3^n etc. are symmetric)
+n=12  max|phi|=2.645817e-02  at xi=16384  (xi*2 mod 3^n etc. are symmetric)
+n=13  max|phi|=2.205243e-02  at xi=65536  (xi*2 mod 3^n etc. are symmetric)
+n=14  max|phi|=1.912799e-02  at xi=131072  (xi*2 mod 3^n etc. are symmetric)
+n=15  max|phi|=1.628448e-02  at xi=262144  (xi*2 mod 3^n etc. are symmetric)
+
+ n   max|phi|       ratio to previous
+ 1  5.773503e-01   nan
+ 2  3.779236e-01   0.6546
+ 3  2.522368e-01   0.6674
+ 4  1.769989e-01   0.7017
+ 5  1.292736e-01   0.7304
+ 6  9.610639e-02   0.7434
+ 7  7.587004e-02   0.7894
+ 8  6.089074e-02   0.8026
+ 9  4.802615e-02   0.7887
+10  3.827832e-02   0.7970
+11  3.194419e-02   0.8345
+12  2.645817e-02   0.8283
+13  2.205243e-02   0.8335
+14  1.912799e-02   0.8674
+15  1.628448e-02   0.8513

@@ -1,0 +1,3 @@
+HIT total=225 k0=10 l0=1 k1=17 l1=5 k2=160 l2=5 k3=34 l3=1 k4max=4
+HIT total=225 k0=26 l0=4 k1=68 l1=3 k2=58 l2=6 k3=45 l3=1 k4max=28
+SUMMARY N=199 T=225 KMAX=221 w=30 threads=8 right=58057 left=82473445121 matches=8570190114 hits=2 bad=0 max_total=225 at (10,1,17,5,160,5,34,1)

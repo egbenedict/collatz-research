@@ -1,0 +1,23 @@
+System F: 14 rules; YAH status: P
+  ob1: SN of 11 rules (R minus Bf)
+    [ob1] ext nat d=1 w=1: sat (0.0s, 260v/832c, cadical195#0) removes ['1>->>', '0f>->0>', '1f>->1>']
+    [ob1] ext nat d=1 w=1: sat (0.0s, 192v/607c, cadical195#0) removes ['1t>->12>', '2t>->22>']
+    [ob1] ext nat d=1 w=1: unsat (0.0s, 118v/368c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.0s, 530v/1700c, cadical195#0) removes ['f0->0f', 'f2->1f', 't0->1t', 't1->2f']
+    [ob1] ext nat d=1 w=1: sat (0.0s, 46v/126c, cadical195#0) removes ['f1->0t']
+    [ob1] ext nat d=1 w=1: unsat (0.0s, 20v/56c, cadical195#0)
+    [ob1] ext nat d=1 w=2: sat (0.0s, 83v/252c, cadical195#0) removes ['t2->2t']
+  ob2: SN of 9 rules (R minus De)
+    [ob2] ext nat d=1 w=1: sat (0.0s, 197v/625c, cadical195#0) removes ['<0-><t', '<1-><ff', '<2-><ft']
+    [ob2] ext nat d=1 w=1: unsat (0.0s, 118v/368c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.0s, 530v/1700c, cadical195#0) removes ['f0->0f', 'f2->1f', 't0->1t', 't1->2f']
+    [ob2] ext nat d=1 w=1: sat (0.0s, 46v/126c, cadical195#0) removes ['f1->0t']
+    [ob2] ext nat d=1 w=1: unsat (0.0s, 20v/56c, cadical195#0)
+    [ob2] ext nat d=1 w=2: sat (0.0s, 83v/252c, cadical195#0) removes ['t2->2t']
+  ob3-rev: SN(H_top / R) with H = ['>1->>', '>f0->>0', '>f1->>1', '>t1->>21', '>t2->>22']
+    [ob3-rev] top nat d=1 w=1: unsat (0.0s, 331v/1056c, cadical195#0)
+    [ob3-rev] top nat d=1 w=2: unsat (0.0s, 1865v/6114c, cadical195#0)
+    [ob3-rev] top nat d=2 w=2: unsat (10.9s, 13358v/44985c, cadical195#0)
+    [ob3-rev] top arc d=5 w=4: unknown (300.9s, 177767v/614600c, timeout)
+  ob3-rev: no proof within configs
+  result: False (312.0s total)

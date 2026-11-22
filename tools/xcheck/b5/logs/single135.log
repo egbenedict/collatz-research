@@ -1,0 +1,9 @@
+m=135 N=189: even B5 = b4+1 = 210 does not close
+m=135 N=191: even B5 = b4+1 = 217 does not close
+m=135 N=193: even B5 = b4+1 = 217 does not close
+m=135 N=195: even B5 = b4+1 = 217 does not close
+m=135 N=197: even B5 = b4+1 = 218 does not close
+m=135 N=199: b4(N) = 221; closes iff B5(199) <= 230 (= b4 + 9)
+m=135 N=201: b4(N) = 221; closes iff B5(201) <= 230 (= b4 + 9)
+m=135 N=203: b4(N) = 226; closes iff B5(203) <= 230 (= b4 + 4)
+m=135 N=205: b4(N) = 226; closes iff B5(205) <= 230 (= b4 + 4)

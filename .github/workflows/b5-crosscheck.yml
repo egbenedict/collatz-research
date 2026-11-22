@@ -1,0 +1,70 @@
+name: B5 cross-check (slow solver v0 vs fast solver)
+
+# Independent check of one five-rise bound value, e.g. B5(199) = 225 (needed for m <= 135; see ideas/log.md I-016).
+# The fast solver (b5mitm.c) lists every odd n < 2^N whose first five rises total >= T.
+# The slow, differently structured solver (b5mitm_v0.c) is sharded over 32 jobs x 4 processes.
+# The compare job diffs the two hit lists; it fails if they differ.
+
+on:
+  workflow_dispatch:
+    inputs:
+      N:    { description: "bit length N", default: "199" }
+      T:    { description: "threshold T (v0 needs T+4-N <= 30)", default: "225" }
+      KMAX: { description: "B4(N) cap used by the solvers", default: "221" }
+
+env:
+  NW: 128
+
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - name: build and run b5mitm (4 threads)
+        working-directory: tools/xcheck/b5
+        run: |
+          gcc -O3 -march=native -o b5mitm b5mitm.c -lpthread
+          ./b5mitm ${{ inputs.N }} ${{ inputs.T }} ${{ inputs.KMAX }} 4 | tee fast.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: fast, path: tools/xcheck/b5/fast.txt }
+
+  slow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+    steps:
+      - uses: actions/checkout@v4
+      - name: build and run 4 v0 workers
+        working-directory: tools/xcheck/b5
+        run: |
+          gcc -O3 -march=native -o b5mitm_v0 b5mitm_v0.c
+          for p in 0 1 2 3; do
+            id=$(( ${{ matrix.shard }} * 4 + p ))
+            ./b5mitm_v0 ${{ inputs.N }} ${{ inputs.T }} ${{ inputs.KMAX }} $id $NW > slow_$id.txt &
+          done
+          wait
+          cat slow_*.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: "slow-${{ matrix.shard }}", path: tools/xcheck/b5/slow_*.txt }
+
+  compare:
+    needs: [fast, slow]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: out }
+      - name: diff hit lists
+        run: |
+          grep -h HIT out/fast/fast.txt | sed 's/ k4max=.*//' | sort > fast.sorted
+          cat out/slow-*/slow_*.txt | grep HIT | sed 's/ k4max=.*//' | sort > slow.sorted
+          nsum=$(cat out/slow-*/slow_*.txt | grep -c SUMMARY)
+          echo "slow workers reporting: $nsum / $NW"
+          test "$nsum" -eq "$NW"
+          { echo "### B5 cross-check N=${{ inputs.N }} T=${{ inputs.T }}"
+            echo "fast hits: $(wc -l < fast.sorted), slow hits: $(wc -l < slow.sorted), slow workers: $nsum/$NW"
+            echo '```'; cat fast.sorted; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          diff slow.sorted fast.sorted && echo "IDENTICAL HIT LISTS" | tee -a "$GITHUB_STEP_SUMMARY"

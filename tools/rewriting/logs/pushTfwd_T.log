@@ -1,0 +1,5 @@
+System T: 11 rules; YAH status: O
+  ob3-fwd: SN(H_top / R) with H = ['<0-><t', '<1-><ff', '<2-><ft']
+    [ob3-fwd] top nat d=3 w=2: unknown (180.2s, 26239v/88723c, timeout)
+    [ob3-fwd] top arc d=3 w=3: unknown (180.1s, 20906v/68836c, timeout)
+    [ob3-fwd] top arc d=4 w=2: unknown (180.1s, 26465v/86641c, timeout)
