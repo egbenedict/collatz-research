@@ -529,7 +529,8 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Limits:** UNSAT covers only the shapes searched, and timeouts mean nothing. The search used
   about 1 CPU-hour, against YAH's thousands, and the prover is about 10× slower than theirs. The
   arctic top-termination strictness argument is unformalized.
-- **Next:** a long background run on H (`logs/H_long.txt`).
+- **Next:** the long run on H is on GitHub Actions (4 shapes in parallel):
+  https://github.com/egbenedict/collatz-research/actions/runs/45084419328
 
 ### I-016: Track C, no m-cycles for m ≤ 135 (computed; iteration 7, 2026-11-22)
 - **Status:** computed, not proved. m ≤ 134 is cross-checked by two solvers; the m = 135 cross-check is running.
@@ -551,8 +552,11 @@ reason is progress. The kill tests are defined in `../README.md`.
   - Every maximizer is re-simulated as an integer.
   - **N = 121 cross-checked:** v0 on 8 workers gives the same 4 maximizers (total 143) as
     `b5mitm.c` (`logs/v0_hits_N121_T143.txt`). So m = 134 rests on two independent solvers.
-  - N = 199, needed only for m = 135: a v0 check of 'no total ≥ 226' is running, about 13 h on
-    6 workers.
+  - N = 199, needed only for m = 135: the fast solver gives exactly 2 hits at total 225 (local,
+    `logs/v1_hits_N199_T225.txt`). The v0 cross-check moved to GitHub Actions (32 jobs × 4
+    workers, `.github/workflows/b5-crosscheck.yml`). A smoke test at N = 73 passed (128/128
+    workers, identical hits). The real run is
+    https://github.com/egbenedict/collatz-research/actions/runs/45084416562.
 - **Relies on:** Barina's 2^71 verification, Rhin's bound (unchecked), Marshall's B₂–B₄ tables
   (spot-checked; see `tools/xcheck/README.md`), and the rule-5 chain lemma (rules 2–4 composed).
 - **Significance:** this goes two steps past the best published computed bound (m ≤ 133,
