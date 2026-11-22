@@ -1,4 +1,5 @@
 name: B5 cross-check (slow solver v0 vs fast solver)
+# Run from the Actions tab or: gh workflow run b5-crosscheck.yml -f N=199 -f T=225 -f KMAX=221
 
 # Independent check of one five-rise bound value, e.g. B5(199) = 225 (needed for m <= 135; see ideas/log.md I-016).
 # The fast solver (b5mitm.c) lists every odd n < 2^N whose first five rises total >= T.

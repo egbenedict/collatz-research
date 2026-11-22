@@ -1,4 +1,5 @@
 name: Rewriting termination search (system H)
+# Run from the Actions tab or: gh workflow run rewriting-search.yml -f system=H
 
 # Matrix-interpretation SAT search for termination of the accelerated system H (ideas/log.md I-015).
 # One job per interpretation shape. Any proof found is re-checked by check.py before upload.
