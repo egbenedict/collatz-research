@@ -592,3 +592,12 @@ reason is progress. The kill tests are defined in `../README.md`.
   The table memory is 0.8 GB.
 - **Run:** `.github/workflows/b5-sharded.yml` with N=326 T=350 KMAX=349 B3=357. It also re-confirms
   b₄(326) = 349 with b4mitm.
+- **Run 1** (Actions 45098696144, 2 h 20 min wall, 64 shards × 4 threads, about 21 min per shard):
+  - All 64/64 shards completed, bad = 0, 1.622·10¹² left prefixes.
+  - **No n < 2^326 has a five-rise total ≥ 350.** b4mitm also confirms no four-rise total ≥ 350.
+  - Read literally this gives B₅(326) ≤ 349 = table b₄(326). That is possible only if the table entry
+    is an upper bound, not exact; only B₄(317) = 337 is checked exact.
+  - Not trusted until a positive control shows that the 1024-bit, N = 326 solver does find hits.
+- **Run 2** (Actions 45112998308): same N, T = 344, plus a b4mitm listing of four-rise totals ≥ 338
+  (exact B₄(326)). Expected: max five-rise total ≥ exact B₄(326) + 1. Each maximiser will be
+  re-simulated as an integer.
