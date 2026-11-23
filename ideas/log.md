@@ -644,3 +644,9 @@ reason is progress. The kill tests are defined in `../README.md`.
   as at N = 326, the margin is zero or negative, so m = 137 is marginal with rules ≤ 5.
 - Actions run 45126840802: B₅(328) at T = 355 (64 shards). It decides whether the roughly
   430-runner-hour N = 532 run is worth doing.
+- **B₅(328) = 359** (Actions 45126840802, T = 355, 4 hits, b₄(328) = 349 re-confirmed). The maximiser
+  (235,1,42,2,33,3,4,1) re-simulates as a 328-bit integer with rises 235, 42, 33, 4, 45. So m = 137 needs
+  **B₅(532) ≤ 556 = b₄(532) + 2**, which is unlikely given +6 at N = 326.
+- Cheap decider before the roughly 430-runner-hour B₅(532) run: exact B₄(532) by b4mitm, now with
+  `-DLIMBS=16` (512-bit vs 1024-bit regression at (120, 133): 56 identical hits). Actions 45138138457.
+  If B₄(532) ≥ 556, then B₅(532) ≥ 557, and m = 137 cannot close with rules ≤ 5 at this table.
