@@ -764,3 +764,5 @@ reason is progress. The kill tests are defined in `../README.md`.
   256 shards). It has the same cost (the left side dominates) and lists every pattern ≥ 557, which gives
   exact B₅(532) and exact C₅(532), since the floor Dh1·556 − 4 = 321.24 < 322.41. m = 137 closes iff
   C₅(532) ≤ 324.134.
+- Kill test of the weighted block lemma (exact integers, 3000 random odd n ≈ 2^100, five blocks):
+  max (n′+1)·2^{K+L}/(3^K(n+1)) − 1 = 9.3·10⁻²³, below the allowance 5·2⁻⁷⁰·ln 2 = 2.9·10⁻²¹. It passes.
