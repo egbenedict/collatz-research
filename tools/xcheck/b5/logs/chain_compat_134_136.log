@@ -1,9 +1,7 @@
-B5 table (compat): {73: 91, 74: 91, 79: 101, 114: 137, 116: 139, 119: 141, 120: 143, 121: 143, 122: 145, 124: 146, 128: 152, 130: 152, 132: 158, 199: 225}
-m=134: hard shape K=2.744e19 ratio 0.5827583, rule use {1: 67, 2: 20, 3: 25, 4: 16, 5: 5}
+B5 table (compat): {73: 91, 74: 91, 79: 101, 114: 137, 116: 139, 119: 141, 120: 143, 121: 143, 122: 145, 124: 146, 128: 152, 130: 152, 132: 158, 199: 225, 326: 355}
+m=134: hard shape K=2.744e19 ratio 0.3676797, rule use {1: 67, 2: 20, 3: 24, 4: 15, 5: 7}
 m=134: Kceil=2.5353e+30, 94 K-ranges, 0 dangerous candidates tested, 0 open, worst chain ratio 0.0000000 at K=None  [3s]
-m=135: hard shape K=2.744e19 ratio 0.9236500, rule use {1: 68, 2: 20, 3: 25, 4: 16, 5: 5}
-m=135: Kceil=2.5353e+30, 94 K-ranges, 3 dangerous candidates tested, 0 open, worst chain ratio 0.9236500 at K=27444133206411171953  [3s]
-m=136: hard shape K=2.744e19 ratio 1.4639507, rule use {1: 69, 2: 20, 3: 26, 4: 15, 5: 5}
-m=136: Kceil=5.0706e+30, 95 K-ranges, 4 dangerous candidates tested, 2 open, worst chain ratio 1.4639507 at K=27444133206411171953  [3s]
-   OPEN: (27444133206411171953, 43497921996957973433, 'chain (m2=85, Y0=72.0932, use={1: 69, 2: 20, 3: 26, 4: 15, 5: 5})', 1.463950669298242)
-   OPEN: (205632218873398596256, 325919355854421968365, 'chain (m2=90, Y0=78.7961, use={1: 66, 2: 22, 3: 31, 4: 13, 5: 3})', 1.2243278143605756)
+m=135: hard shape K=2.744e19 ratio 0.5827585, rule use {1: 68, 2: 20, 3: 24, 4: 15, 5: 7}
+m=135: Kceil=2.5353e+30, 94 K-ranges, 1 dangerous candidates tested, 0 open, worst chain ratio 0.5171292 at K=77692117359936589403  [3s]
+m=136: hard shape K=2.744e19 ratio 0.9236504, rule use {1: 69, 2: 20, 3: 24, 4: 15, 5: 7}
+m=136: Kceil=5.0706e+30, 95 K-ranges, 3 dangerous candidates tested, 0 open, worst chain ratio 0.9236504 at K=27444133206411171953  [3s]

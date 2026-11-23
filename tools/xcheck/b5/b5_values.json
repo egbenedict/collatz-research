@@ -241,6 +241,29 @@
   "secs": 885.3,
   "witness": "482859367075629633254001192091318219076020005741242322885631"
  },
+ "326": {
+  "B4_confirmed_by_b4mitm": true,
+  "B4_exact_by_b4mitm": 349,
+  "B4tab": 349,
+  "B5": 355,
+  "KMAX": 349,
+  "T": 344,
+  "hits": 2229,
+  "left": 1621977380531,
+  "runs": [
+   84,
+   4,
+   7,
+   1,
+   25,
+   4,
+   223,
+   2
+  ],
+  "secs": null,
+  "where": "GitHub Actions runs 45098696144 (T=350, 29 hits) and 45112998308 (T=344, 2229 hits); 64 shards x 4 threads, LIMBS=16; hit lists agree on totals >= 350",
+  "witness": "118631529519881789054369990617055405652761606207635920661839682837385584074876878633481442793881599"
+ },
  "73": {
   "B4_confirmed_by_b4mitm": true,
   "B4tab": 87,

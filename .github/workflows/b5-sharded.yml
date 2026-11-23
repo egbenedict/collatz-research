@@ -76,7 +76,10 @@ jobs:
           if grep -h '^UNRESOLVED' out/shard-*/shard_*.txt; then exit 1; fi
           bad=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* bad=\([0-9]*\).*/\1/' | paste -sd+ | bc)
           left=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* left=\([0-9]*\).*/\1/' | paste -sd+ | bc)
-          grep -h '^HIT' out/shard-*/shard_*.txt | sort -t= -k2 -n -r > hits.txt || true
+          # sort by total (no `sort -t=`: it failed on the runner and the old `|| true` hid it)
+          grep -h '^HIT' out/shard-*/shard_*.txt | sed 's/^HIT total=\([0-9]*\) /\1 &/' | sort -k1,1nr | cut -d' ' -f2- > hits.txt
+          nh=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* hits=\([0-9]*\).*/\1/' | paste -sd+ | bc)
+          echo "hit lines $(wc -l < hits.txt), per-shard hit counts sum $nh"; test "$(wc -l < hits.txt)" -eq "$nh"
           max=$(head -1 hits.txt | sed 's/HIT total=\([0-9]*\).*/\1/')
           { echo "### B5 sharded: N=${{ inputs.N }} T=${{ inputs.T }} KMAX=${{ inputs.KMAX }}"
             echo "- shards: $n/$NS, bad=$bad, left prefixes=$left, hits=$(wc -l < hits.txt), max total=${max:-none (< T)}"

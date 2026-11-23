@@ -570,8 +570,9 @@ reason is progress. The kill tests are defined in `../README.md`.
   Marshall) and past the Lean-checked m ≤ 111. It is still finite: the cycle side can never be
   closed this way.
 
-### I-017: Track C, m = 136 needs one new value, B₅(326) (iteration 8, 2026-11-22)
-- **Status:** computing (GitHub Actions, 64 shards). Not proved.
+### I-017: Track C, no m-cycles for m ≤ 136 (computed; iteration 8, 2026-11-22)
+- **Status:** computed, not proved. **B₅(326) = 355**, so m = 136 closes. The new input comes from one
+  implementation and has a positive control, but no independent second solver.
 - **Which points:** `tools/xcheck/b5/minset136.py` uses the computed table plus hypothetical
   B₅ = b₄ + 4 at the other B₄ grid points.
   - Grid points up to N = 321: m = 136 stays open (hard shape 1.4640).
@@ -601,3 +602,34 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Run 2** (Actions 45112998308): same N, T = 344, plus a b4mitm listing of four-rise totals ≥ 338
   (exact B₄(326)). Expected: max five-rise total ≥ exact B₄(326) + 1. Each maximiser will be
   re-simulated as an integer.
+- **Result 2: the merge was broken, the shards were not.** On the runner, `sort -t=` failed
+  ("separator must be exactly one character long"), and `|| true` hid the failure, so `hits.txt` was
+  empty in both runs.
+  - Run 1's "no hits" (above) is **retracted**.
+  - The shard files are correct. Shard 27 contains the total-350 case built from the exact four-rise
+    maximiser.
+  - Merging locally: run 1 has 29 hits with total ≥ 350; run 2 has 2229 hits with total ≥ 344; on
+    totals ≥ 350 the two lists are identical.
+  - Fix: the merge now sorts with sed + `sort -k1,1nr`, and checks that the number of hit lines equals
+    the sum of the per-shard hit counts.
+- **Values:**
+  - **B₄(326) = 349 exactly**: b4mitm lists 1604 four-rise totals ≥ 338, maximum 349.
+  - **B₅(326) = 355** (b₄ + 6, within the tolerance of 361), at runs (84,4,7,1,25,4,223,2).
+  - The maximiser re-simulates as a 326-bit odd integer with rises 84, 7, 25, 223, 16.
+  - Positive control: the exact four-rise maximiser (176,1,131,3,1,2) extended with k₃ = 41 and
+    l₃ = 2 is found with total 350 = B₄ + 1, locally (clang, gcc-15, UBSan/ASan) and in the cloud.
+- **Chain with B₅(326) = 355 added** (`logs/chain_own_136_137.log`, `logs/sweep_own_92_136.log`,
+  `logs/chain_compat_134_136.log`):
+  - **Own mode, m = 92…136: all 45 closed.** The worst ratio is 0.9236502, at the same hard shape
+    K = 27,444,133,206,411,171,953.
+  - Compat mode: m = 134–136 closed.
+  - Negative control: m = 137 is open (3 of 4 dangerous candidates; hard shape 2.3203).
+- **Depends on:**
+  - E1 (Barina 2^71) and E3 (Rhin).
+  - Marshall's B₂/B₃ tables, and B₄ at the grid points used. B₄(326) is now confirmed exact.
+  - The rule-5 chain lemma.
+  - The B₅ values. Those ≤ 199 are checked by two solvers. **B₅(326) is checked by one solver only**:
+    the slow v0 would need about 40× the compute, roughly 500 runner-hours.
+- **Next for m = 137:** the ratio grows about ×1.585 per m, so m = 137 needs B₅ around N ≈ 520,
+  which is beyond this solver (C(520,6) ≈ 2.7·10¹³ prefixes). A six-rise rule B₆ may be cheaper per
+  saved step.

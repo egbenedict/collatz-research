@@ -83,10 +83,11 @@ its parity vectors are much cleaner.
   - a positive density of integers reaching 1 (Lean-checked, constant 2^(−2^(2^163)));
   - a positive predecessor density for every y with 3 ∤ y. This would make Collatz
     equivalent to "density exactly 1". See bibliography 9.7–9.10 and I-006.
-- **Our computed extension: no m-cycles for m ≤ 135** (I-016). It adds an exact five-rise bound
-  B₅ to an independent Marshall-style chain, and each new B₅ value is confirmed by two
-  solvers. It still relies on 2⁷¹, Rhin's bound, and Marshall's B₂–B₄ tables. m = 136 needs B₅
-  near N ≈ 320.
+- **Our computed extension: no m-cycles for m ≤ 136** (I-016, I-017). It adds exact five-rise
+  bounds B₅ to an independent Marshall-style chain. The values up to N = 199 are confirmed by two
+  solvers; B₅(326) = 355 was computed on GitHub Actions with one solver plus a positive control. It
+  still relies on 2⁷¹, Rhin's bound, and Marshall's B₂–B₄ tables. m = 137 needs B₅ near N ≈ 520
+  (out of reach).
 - Fourier decay of Tao's Syracuse variable: computed exactly to n = 17 and to n = 1200 with a
   validated banded recursion. It decays exponentially, but at the tiny rate I₀ = I(log₂3) ≈ 0.055,
   with extremal ξ = 2^k and 2^k ≈ 3ⁿ (I-007). This agrees with a 2026 conjecture by WakauraH.

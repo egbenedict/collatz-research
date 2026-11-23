@@ -122,3 +122,18 @@ scripts `sens5*.py`, `plan135.py`, `minset135.py`, `single135.py`, `tol134.py`, 
 `trace134.py`, `binding5.py`, `small_b5.py`.
 
 Reproduce: `cc -O3 -o b5mitm b5mitm.c && python3 test_b5mitm.py 36 && python3 compute_b5.py 73 121 199:218 && ./final_runs.sh`.
+
+## m = 136 (iteration 8, I-017)
+
+- `minset136.py`: B₅(326) is the only new point needed. `single135.py 4 136 …`: m = 136 closes iff
+  B₅(326) ≤ 361.
+- `b5mitm.c` additions:
+  - `SHARD NSHARD` arguments;
+  - a join key of min(w, 30) bits (`-DWKCAP`);
+  - `-DLIMBS=16` for 1024-bit arithmetic.
+  - Regression: (60, 74) gives 42 identical hits across 5 shards, an 8-bit key and 16 limbs; (73, 91)
+    matches v0.
+- Cloud: `.github/workflows/b5-sharded.yml`, 64 shards, about 21 min each, 1.622·10¹² left prefixes.
+  - **B₄(326) = 349 exact.**
+  - **B₅(326) = 355** at (84,4,7,1,25,4,223,2); the witness is in `b5_values.json`.
+- Chain: m ≤ 136 closed, m = 137 open.
