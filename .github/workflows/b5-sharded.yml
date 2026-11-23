@@ -14,6 +14,9 @@ on:
       B3:   { description: "b3(N): cap used to confirm KMAX with b4mitm", default: "357" }
       NS:   { description: "number of shards (<= 256)", default: "64" }
       B4T:  { description: "optional: also list four-rise totals >= B4T (exact B4 / positive control)", default: "" }
+      K0MIN: { description: "partial search only (lower bounds): keep items with k0 >= K0MIN", default: "1" }
+      K0MAX: { description: "partial search only: keep items with k0 <= K0MAX (empty = N)", default: "" }
+      L0MAX: { description: "partial search only: keep items with l0 <= L0MAX (large = no limit)", default: "100000" }
 
 env:
   NS: ${{ inputs.NS }}
@@ -64,6 +67,7 @@ jobs:
         working-directory: tools/xcheck/b5
         run: |
           gcc -O3 -march=native -DLIMBS=16 -o b5mitm b5mitm.c -lpthread
+          export K0MIN=${{ inputs.K0MIN }} K0MAX=${{ inputs.K0MAX || inputs.N }} L0MAX=${{ inputs.L0MAX }}
           /usr/bin/time -v ./b5mitm ${{ inputs.N }} ${{ inputs.T }} ${{ inputs.KMAX }} 4 ${{ matrix.shard }} $NS > shard_${{ matrix.shard }}.txt 2> time_${{ matrix.shard }}.txt
           tail -1 shard_${{ matrix.shard }}.txt
           grep -E "Elapsed|Maximum resident" time_${{ matrix.shard }}.txt
