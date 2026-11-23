@@ -639,3 +639,8 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **m = 137:** with hypothetical B₅ = b₄ + 4 everywhere, the greedy minimal set is {201, 532}. With the
   real value B₅(201) = 226, one more than the hypothetical 225, the point 532 alone no longer closes m = 137,
   even at b₄ + 1. The minimal set is being recomputed (logs/minset137_c4.log).
+- **m = 137 point set** (real B₅(201) = 226): greedy minimal set **{328, 532}**. Joint tolerance
+  (`tol137.py`): m = 137 closes iff **B₅(328) + B₅(532) ≤ 915**, with 355 ≤ B₅(328) ≤ 360. If B₅ − B₄ ≈ 6
+  as at N = 326, the margin is zero or negative, so m = 137 is marginal with rules ≤ 5.
+- Actions run 45126840802: B₅(328) at T = 355 (64 shards). It decides whether the roughly
+  430-runner-hour N = 532 run is worth doing.
