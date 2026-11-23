@@ -766,3 +766,8 @@ reason is progress. The kill tests are defined in `../README.md`.
   C₅(532) ≤ 324.134.
 - Kill test of the weighted block lemma (exact integers, 3000 random odd n ≈ 2^100, five blocks):
   max (n′+1)·2^{K+L}/(3^K(n+1)) − 1 = 9.3·10⁻²³, below the allowance 5·2⁻⁷⁰·ln 2 = 2.9·10⁻²¹. It passes.
+- **B₅(532) ≥ 563** (T = 557 run, shard 3; witness: an odd 529-bit integer with rises 46, 156, 264, 64, 33
+  and falls 5, 7, 1, 2, re-simulated). Under the **standard** rule this alone means m = 137 cannot close
+  (that needed B₅(532) ≤ 560). Under the **fall-weighted** rule this pattern scores 314.33, far below the
+  tolerance 324.134. After 19 of 256 shards: 10 hits, bad = 0, max weighted 322.409 (the 558 pattern with
+  fall sum 4). So the weighted rule is what keeps m = 137 alive, pending the remaining shards.
