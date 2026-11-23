@@ -1,0 +1,3 @@
+all est 2123..2200 closes: True
+greedy minimal set: [2168] est values [2187]
+uniform slack above the interpolation estimate that still closes: < 12

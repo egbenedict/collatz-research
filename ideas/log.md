@@ -657,3 +657,31 @@ reason is progress. The kill tests are defined in `../README.md`.
   partial search, so it gives a lower bound only, never an exact value. Unrestricted output is unchanged:
   42 hits at (60,74,72). One item costs about C(N−k₀,4) prefixes. Any n < 2^532 with a five-rise total
   ≥ 557 kills m = 137 for rules ≤ 5 without the full run.
+- **B₅(532) ≥ 557** (restricted search, item (k₀,l₀) = (163,1), T = 557, 97 s on one core). The witness
+  re-simulates as an odd 532-bit n with rises 163, 26, 209, 156, 3. So {328, 532} cannot close m = 137:
+  B₅(328) + B₅(532) ≥ 916 > 915.
+- **The binding query is not on Marshall's grid** (`logs/cascade137.log`). In the hard-shape chain,
+  Y₂₀ = 531.21 = Y₁₅ + 0.585·b₅(327) − 5 with b₅(327) = B₅(328) = 359, and Y₁₅ = 326.20 comes from
+  Y₁₀ = 199.0024, which uses b₅(200) = B₅(201) = 226. Exact values at the intermediate N move the query
+  (`tol137b.py`, hypothetical inputs):
+  - B₅(200) = 225: m = 137 closes iff B₅(532) ≤ 561 (query moves to 529, so B₅(529) suffices too).
+  - B₅(327) = 355 / 356 / 357 / 358: closes iff B₅(532) ≤ 560 / 559 / 558 / 557.
+  - B₅(200) = 226 with B₅(327) unknown: open even at B₅(532) = 557.
+  So m = 137 is not dead, only narrow: it needs B₅(200) = 225 (Actions 45153299180, running) or a small
+  B₅(327), and then B₅(529 or 532) within about +7 of B₄(532) = 554.
+- Withdrawn before logging: an "optimistic B₅ at every integer N" test closed everything. That is an
+  artefact: a step-function lower bound just below each grid point is far below any real value, so the
+  test says nothing. Script deleted.
+- Rule 6 (hypothetical, `sens6real.py`, B₆ = B₅ + c at the computed B₅ points): c = 1 closes with
+  {74, 79}, c = 3 with {120, 199}, and c ≥ 5 cannot close. B₆ − B₅ is unknown; it needs a new solver.
+- **B₅(200) = 226** (Actions 45153299180, 16 shards, T = 225; KMAX = 221 confirmed). The B₅(201)
+  maximiser is already a 200-bit integer; I should have checked that before the run. So the
+  "B₅(200) = 225" route is dead. B₅(327) ≤ 358 is still open.
+- **New idea (iteration 9): an adaptive grid.** The chain's binding queries fall between Marshall's grid
+  points, where b_r(N) jumps to the next grid point's value. A hypothetical dense table (interpolated
+  B₂–B₄ estimates, `b5/adaptive.py`, `logs/adaptive137.log`) plus B₅(532) = 557 closes m = 137 at
+  0.857. The gain comes from **B₃ off-grid at N ≈ 2145–2161** (densifying 2100–2200 is enough;
+  densifying N ≤ 1000 does nothing). Today b₃ there is B₃(2228) = 2246, while the estimate is about 2164.
+- `tools/xcheck/b3mitm.c`: a three-rise MITM derived from b4mitm (LIMBS configurable). It matches
+  `rises.py` B₃ for N = 4…40 (witnesses realised, nothing at T+1) and Marshall at 310 (324) and
+  412 (429), with nothing at T+1, in under 1 s each. Exact B₃ at the off-grid queries is cheap.
