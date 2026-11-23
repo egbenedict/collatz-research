@@ -1,0 +1,4 @@
+m=138 dense-interpolated rules [2, 3, 4] (down) B5 extra ['327:355', '532:557'] NCUT=10000000: open (worst 1.0599)
+m=138 dense-interpolated rules [2, 3, 4] (down) B5 extra ['327:355', '532:557', '852:880'] NCUT=10000000: closed (worst 0.0000)
+m=138 hard shape with B5(327)=355, B5(532)=557 (hypothetical): ratio 1.464 use {1: 71, 2: 20, 3: 24, 4: 10, 5: 12}
+Y 500-1500: [514.8, 517.9, 523.3, 526.4, 528.9, 835.6, 838.7, 844.1, 847.2, 849.7, 1345.8, 1354.3, 1357.4, 1359.9]

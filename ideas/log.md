@@ -702,3 +702,16 @@ reason is progress. The kill tests are defined in `../README.md`.
   value. It is checked by one solver (b3mitm) only, plus the positive and negative controls.
 - With this real value, m = 137 closes iff **B₅(532) = 557** (checked: 557 closes at 0.9236, 558 is open),
   or with the B₅(327) tolerances above. Everything now hinges on B₅(532) and B₅(327).
+- **Wall for Track C** (`logs/adaptive138.log`, hypothetical inputs): even with idealised dense B₂–B₄,
+  B₅(327) = 355 and B₅(532) = 557, m = 138 stays open (1.0599). It closes once a B₅ point near N ≈ 850 is
+  added (the next saw-tooth block: hard-shape Y ≈ 835–850). Each further m needs a B₅ point about δ = 1.585×
+  higher, and B₅ costs about C(N,6), so about 16× more per m: N = 532 is about 430 runner-hours, and N = 850
+  about 7·10³. So m = 137 is the last m this route can plausibly reach. Without a cheaper B₅ method
+  (or a B₆ with small B₆ − B₅), Track C ends at m = 136 or 137. That is a computational frontier, not a
+  proof direction.
+- **B₅(327) = 355** (Actions 45157752295, 64 shards, T = 355: 2 hits, both 355; these are the N = 326
+  maximisers, and the witness re-simulates with rises 78, 12, 40, 28, 197; b4confirm: no four-rise ≥ 350).
+- **With the real table, m = 137 closes iff B₅(532) ≤ 560** (checked directly: 557 and 560 close at
+  0.9237, 561 is open). Known: B₅(532) ≥ 557. So m = 137 reduces to one finite computation: "no odd
+  n < 2^532 with a five-rise total ≥ 561" (b5mitm at T = 561, about 430 runner-hours). B₃(2168) is not
+  needed on this route.
