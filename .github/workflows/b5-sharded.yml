@@ -12,6 +12,7 @@ on:
       T:    { description: "threshold T", default: "350" }
       KMAX: { description: "b4(N): cap on the first four rises", default: "349" }
       B3:   { description: "b3(N): cap used to confirm KMAX with b4mitm", default: "357" }
+      B4T:  { description: "optional: also list four-rise totals >= B4T (exact B4 / positive control)", default: "" }
 
 env:
   NS: 64
@@ -30,8 +31,15 @@ jobs:
           ./b4mitm ${{ inputs.N }} $T4 ${{ inputs.B3 }} | tee b4.txt
           grep -q "max_total=-1" b4.txt
           if grep -q UNRESOLVED b4.txt; then exit 1; fi
+      - name: exact B4 (optional)
+        if: ${{ inputs.B4T != '' }}
+        working-directory: tools/xcheck
+        run: |
+          ./b4mitm ${{ inputs.N }} ${{ inputs.B4T }} ${{ inputs.B3 }} > b4exact.txt
+          tail -1 b4exact.txt; grep -c '^HIT' b4exact.txt || true
+          sort -t= -k2 -n -r b4exact.txt | head -5
       - uses: actions/upload-artifact@v4
-        with: { name: b4confirm, path: tools/xcheck/b4.txt }
+        with: { name: b4confirm, path: "tools/xcheck/b4*.txt" }
 
   shard:
     runs-on: ubuntu-latest
