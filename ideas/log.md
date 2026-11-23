@@ -633,3 +633,9 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Next for m = 137:** the ratio grows about ×1.585 per m, so m = 137 needs B₅ around N ≈ 520,
   which is beyond this solver (C(520,6) ≈ 2.7·10¹³ prefixes). A six-rise rule B₆ may be cheaper per
   saved step.
+- **B₅(201) = 226** (Actions 45124714772, 16 shards, T = 222, 51 hits). The maximiser (81,1,28,2,54,1,30,1)
+  re-simulates as a 200-bit integer with rises 81, 28, 54, 30, 33. The N = 199 maximiser (total 225) is
+  also in this list, which is consistent.
+- **m = 137:** with hypothetical B₅ = b₄ + 4 everywhere, the greedy minimal set is {201, 532}. With the
+  real value B₅(201) = 226, one more than the hypothetical 225, the point 532 alone no longer closes m = 137,
+  even at b₄ + 1. The minimal set is being recomputed (logs/minset137_c4.log).
