@@ -743,3 +743,24 @@ reason is progress. The kill tests are defined in `../README.md`.
   (326/73)⁸ · 5 min ≈ 1.3·10⁴ runner-hours for N = 326, about 30× the B₅(532) run. **Rule 6 does not beat
   the wall.** (The `EXTRA5=532:560` c = 4 line "closes with {73}" is an artefact: m = 137 closes with no B₆
   at all once B₅(532) = 560 is assumed, and the greedy keeps one point.)
+- **New idea (iteration 10): a fall-weighted rule.** The block lemma with the actual fall length is
+  x′ ≤ x + (δ−1)k − l + ε, because n′+1 < 3^k(n+1)/2^{k+l} + 1 and ε < 1/(X₀ ln 2) < 2⁻⁷⁰. Over r blocks,
+  x_t ≤ x_{t−r} + C_r(N) − 1 + rε, with **C_r(N) = max over odd n < 2^N of (δ−1)Σ_{i<r}k_i − Σ_{i<r−1}l_i**.
+  This is always ≤ (δ−1)B_r − (r−1), which is what the standard rule assumes (all falls = 1). C_r is
+  nondecreasing in N. Any hit list at threshold T gives the rigorous bound
+  C_r ≤ max(max over hits, Dh1·(T−1) − (r−1)), with Dh1 an upper rational bound for δ−1. In the chain it
+  enters as b_eff = (C + r − 1)/Dh1 (`b5/wtol137.py`, `b5/wchain.py`, `b5/weighted.py`).
+- Results:
+  - **m = 137 closes iff C₅(532) ≤ 324.134**, versus 323.579 = Dh1·560 − 4 under the standard rule. So a
+    five-rise pattern with total 561 no longer kills m = 137 unless its first four falls sum to 4. The
+    partial list gives C₅(532) ≥ 322.41 (a 558 pattern with falls summing to 4; the 560 patterns have
+    fall sum 7).
+  - r = 2: no gain (the maximisers have l₀ = 1).
+  - r = 3 on Marshall's grid N ≤ 412: gains 0–2.34 at 26 of 40 points (`logs/weighted_r3.log`). Rule 3 is
+    not binding there, so m = 137 is unchanged.
+  - m = 138: even a hypothetical uniform gain of 2 on all rules keeps it open (`logs/wgain_hyp138.log`). It
+    still needs the B₅ ≈ 850 block. So the weighted rule helps only at the m = 137 margin.
+- **Deciding run changed**: the T = 561 run was cancelled at 4% and replaced by **T = 557** (Actions 45206467636,
+  256 shards). It has the same cost (the left side dominates) and lists every pattern ≥ 557, which gives
+  exact B₅(532) and exact C₅(532), since the floor Dh1·556 − 4 = 321.24 < 322.41. m = 137 closes iff
+  C₅(532) ≤ 324.134.

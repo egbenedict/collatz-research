@@ -1,0 +1,4 @@
+m=138 uniform gain 0.5 on rules 2-4: ('open', 1.4639)  plus same on rule 5: ('open', 1.4639)
+m=138 uniform gain 1.0 on rules 2-4: ('open', 1.4639)  plus same on rule 5: ('open', 1.4639)
+m=138 uniform gain 1.5 on rules 2-4: ('open', 1.4639)  plus same on rule 5: ('open', 1.4639)
+m=138 uniform gain 2.0 on rules 2-4: ('open', 1.4639)  plus same on rule 5: ('open', 1.2256)

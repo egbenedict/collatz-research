@@ -1,0 +1,7 @@
+r=2 N=72 B2table=84 C2=48.137 at (56, 1, 28); standard 48.137; gain 0.000
+r=2 N=121 B2table=127 C2=73.290 at (42, 1, 85); standard 73.290; gain 0.000
+Traceback (most recent call last):
+  File "/Users/Uri_K/Desktop/CS/collatz/tools/xcheck/b5/weighted.py", line 38, in <module>
+    print(f"r=2 N={N} B2table={b2} C2={float(c):.3f} at {a}; standard {float(std):.3f}; gain {float(std - c):.3f}", flush=True)
+                                                                       ~~~~~^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'
