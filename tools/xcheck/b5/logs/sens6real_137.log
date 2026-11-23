@@ -1,0 +1,4 @@
+m=137 c=1: closes; greedy minimal set [74, 79] -> B6 [92, 102]
+m=137 c=3: closes; greedy minimal set [120, 199] -> B6 [146, 228]
+m=137 c=5: open even with B6 at all 17 points (worst 1.4640)
+m=137 c=8: open even with B6 at all 17 points (worst 1.4640)

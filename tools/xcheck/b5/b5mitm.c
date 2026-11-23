@@ -235,7 +235,16 @@ int main(int argc, char **argv) {
     for (int L3 = 3; L3 < LCAP; L3++) build_table(L3);
 
     items = malloc(sizeof(int[2]) * (N + 1) * (LCAP + 1)); nitems = 0; long idx = 0;
-    for (int k0 = 1; k0 <= N; k0++) for (int l0 = 1; l0 < LCAP; l0++) { if (idx++ % NS == SH) { items[nitems][0] = k0; items[nitems][1] = l0; nitems++; } }
+    /* Optional restriction (for cheap lower-bound / falsifier searches, NOT for exact values):
+       env K0MIN, K0MAX, L0MAX keep only items with K0MIN <= k0 <= K0MAX and l0 <= L0MAX. */
+    int k0min = getenv("K0MIN") ? atoi(getenv("K0MIN")) : 1, k0max = getenv("K0MAX") ? atoi(getenv("K0MAX")) : N;
+    int l0max = getenv("L0MAX") ? atoi(getenv("L0MAX")) : LCAP;
+    int restricted = k0min > 1 || k0max < N || l0max < LCAP;
+    for (int k0 = 1; k0 <= N; k0++) for (int l0 = 1; l0 < LCAP; l0++) {
+        if (idx++ % NS != SH) continue;
+        if (k0 < k0min || k0 > k0max || l0 > l0max) continue;
+        items[nitems][0] = k0; items[nitems][1] = l0; nitems++; }
+    if (restricted) fprintf(stderr, "RESTRICTED items k0 in [%d,%d], l0 <= %d: %d items (partial search, lower bound only)\n", k0min, k0max, l0max, nitems);
     atomic_store(&next_item, 0);
     pthread_t th[64]; stats st[64]; memset(st, 0, sizeof st);
     for (int i = 0; i < NT; i++) { st[i].best = -1; pthread_create(&th[i], NULL, worker, &st[i]); }

@@ -650,3 +650,10 @@ reason is progress. The kill tests are defined in `../README.md`.
 - Cheap decider before the roughly 430-runner-hour B₅(532) run: exact B₄(532) by b4mitm, now with
   `-DLIMBS=16` (512-bit vs 1024-bit regression at (120, 133): 56 identical hits). Actions 45138138457.
   If B₄(532) ≥ 556, then B₅(532) ≥ 557, and m = 137 cannot close with rules ≤ 5 at this table.
+- **B₄(532) = 554 exactly** (Actions 45138138457: T = 550, KMAX = 564, 123 hits, max 554 at
+  (163,1,26,1,209,1), no UNRESOLVED). This equals Marshall's table value, so the decider did not settle
+  anything. It leaves 555 ≤ B₅(532) ≤ ?, and m = 137 closes with rules ≤ 5 iff B₅(532) ∈ {555, 556}.
+- Cheap falsifier next: `b5mitm` now takes env K0MIN/K0MAX/L0MAX to keep only some (k₀,l₀) items. That is a
+  partial search, so it gives a lower bound only, never an exact value. Unrestricted output is unchanged:
+  42 hits at (60,74,72). One item costs about C(N−k₀,4) prefixes. Any n < 2^532 with a five-rise total
+  ≥ 557 kills m = 137 for rules ≤ 5 without the full run.
