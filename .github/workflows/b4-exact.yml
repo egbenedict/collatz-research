@@ -1,0 +1,25 @@
+name: B4 exact (b4mitm, 1024-bit)
+# gh workflow run b4-exact.yml -f N=532 -f T=550 -f KMAX=564
+# Lists every odd n < 2^N whose first four rises total >= T (KMAX = b3(N) cap). Single-threaded.
+on:
+  workflow_dispatch:
+    inputs:
+      N:    { description: "bit length N", default: "532" }
+      T:    { description: "threshold T", default: "550" }
+      KMAX: { description: "b3(N): cap on the first three rises", default: "564" }
+jobs:
+  b4:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - working-directory: tools/xcheck
+        run: |
+          gcc -O3 -march=native -DLIMBS=16 -o b4mitm b4mitm.c
+          /usr/bin/time -v ./b4mitm ${{ inputs.N }} ${{ inputs.T }} ${{ inputs.KMAX }} > b4.txt 2> time.txt
+          tail -1 b4.txt; grep -c '^HIT' b4.txt || true
+          grep '^HIT' b4.txt | sed 's/^HIT total=\([0-9]*\) /\1 &/' | sort -k1,1nr | cut -d' ' -f2- | head -10
+          grep -E "Elapsed|Maximum resident" time.txt
+          if grep -q UNRESOLVED b4.txt; then echo "UNRESOLVED present"; exit 1; fi
+      - uses: actions/upload-artifact@v4
+        with: { name: b4exact, path: tools/xcheck/b4.txt }

@@ -31,8 +31,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LIMBS 8
-#define BITS 512
+#ifndef LIMBS
+#define LIMBS 8           /* -DLIMBS=16 for 1024-bit arithmetic (needed when T + 3 > 510) */
+#endif
+#define BITS (64 * LIMBS)
 typedef struct { uint64_t w[LIMBS]; } big;
 
 static void add(big *r, const big *a, const big *b) {
