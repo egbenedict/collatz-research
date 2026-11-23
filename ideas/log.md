@@ -715,3 +715,13 @@ reason is progress. The kill tests are defined in `../README.md`.
   0.9237, 561 is open). Known: B₅(532) ≥ 557. So m = 137 reduces to one finite computation: "no odd
   n < 2^532 with a five-rise total ≥ 561" (b5mitm at T = 561, about 430 runner-hours). B₃(2168) is not
   needed on this route.
+- **B₅(532) ≥ 560** (partial falsifier, Actions 45157906247, T = 558, items k₀ ≥ 100 and l₀ ≤ 6;
+  31 of 32 shards in: 25 hits, max 560). The witnesses re-simulate as odd integers of 531 and 528 bits
+  with rises 134, 66, 7, 92, 261 and 169, 107, 199, 36, 49. So **m = 137 closes iff B₅(532) = 560 exactly**:
+  zero slack. The deciding computation is the full T = 561 search (one hit kills it).
+- Partial run final: 32/32 shards, bad = 0, 26 hits, max 560 (`b5/logs/b5_532_partial_T558.log`). The run was
+  marked failed only because its b4confirm job used 512-bit b4mitm at N = 532 ("bad parameters"; B₄(532) = 554
+  was confirmed separately, Actions 45138138457). Fixed: the workflow builds b4mitm with -DLIMBS=16.
+- **Deciding run started**: full B₅(532) search at T = 561 (256 shards, about 430 runner-hours, about a day
+  of wall time). No hits ⇒ B₅(532) = 560 ⇒ m = 137 closes (computed, one solver). Any hit ⇒ this route
+  cannot reach m = 137.

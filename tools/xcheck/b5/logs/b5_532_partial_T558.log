@@ -1,0 +1,59 @@
+# Actions 45157906247: N=532 T=558 KMAX=554, items k0>=100, l0<=6 (PARTIAL search: lower bound only)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=0/32 threads=4 right=383891 left=21722048970 matches=8149972 hits=1 bad=0 max_total=559 at (193,1,266,1,44,1,22,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=1/32 threads=4 right=383891 left=22280687412 matches=8383473 hits=3 bad=0 max_total=558 at (180,1,45,2,207,2,24,2)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=10/32 threads=4 right=383891 left=22237680930 matches=8538314 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=11/32 threads=4 right=383891 left=22807044968 matches=9231765 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=12/32 threads=4 right=383891 left=23477883292 matches=8772490 hits=1 bad=0 max_total=558 at (101,1,102,4,346,1,5,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=13/32 threads=4 right=383891 left=22661876766 matches=7439311 hits=1 bad=0 max_total=558 at (229,2,183,3,20,1,101,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=14/32 threads=4 right=383891 left=23283669984 matches=7450798 hits=1 bad=0 max_total=559 at (133,3,66,2,7,1,92,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=15/32 threads=4 right=383891 left=22499134610 matches=9614124 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=16/32 threads=4 right=383891 left=23073927124 matches=7909873 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=17/32 threads=4 right=383891 left=23750938278 matches=8438543 hits=1 bad=0 max_total=558 at (228,1,184,3,20,1,101,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=18/32 threads=4 right=383891 left=22927370646 matches=7489135 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=19/32 threads=4 right=383891 left=23554952836 matches=8660679 hits=2 bad=0 max_total=558 at (170,1,72,1,26,2,113,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=2/32 threads=4 right=383891 left=22939358634 matches=9535577 hits=1 bad=0 max_total=558 at (167,1,107,4,199,9,36,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=20/32 threads=4 right=383891 left=22763009643 matches=9197155 hits=1 bad=0 max_total=560 at (170,2,106,4,199,9,36,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=21/32 threads=4 right=383891 left=23343314347 matches=7842862 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=22/32 threads=4 right=383891 left=22581925223 matches=8538802 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=23/32 threads=4 right=383891 left=21764105713 matches=6388928 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=24/32 threads=4 right=383891 left=22410747644 matches=9699816 hits=1 bad=0 max_total=560 at (169,1,107,4,199,9,36,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=25/32 threads=4 right=383891 left=21624572749 matches=7405632 hits=1 bad=0 max_total=559 at (169,2,106,4,199,9,36,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=26/32 threads=4 right=383891 left=22223463614 matches=7183220 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=27/32 threads=4 right=383891 left=21467876275 matches=8046602 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=28/32 threads=4 right=383891 left=22021190304 matches=8016936 hits=1 bad=0 max_total=559 at (194,2,265,1,44,1,22,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=29/32 threads=4 right=383891 left=22673795552 matches=9405996 hits=2 bad=0 max_total=559 at (168,1,107,4,199,9,36,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=3/32 threads=4 right=383891 left=22138335570 matches=9505076 hits=1 bad=0 max_total=558 at (199,2,20,1,173,6,98,4)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=30/32 threads=4 right=383891 left=21880265702 matches=8450497 hits=2 bad=0 max_total=558 at (168,2,106,4,199,9,36,3)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=31/32 threads=4 right=383891 left=22484818132 matches=8146496 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=4/32 threads=4 right=383891 left=22748657306 matches=7481100 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=5/32 threads=4 right=383891 left=21978667888 matches=7373794 hits=3 bad=0 max_total=558 at (192,1,22,1,69,2,235,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=6/32 threads=4 right=383891 left=22542700559 matches=8520576 hits=0 bad=0 max_total=-1
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=7/32 threads=4 right=383891 left=23207360438 matches=8377847 hits=1 bad=0 max_total=558 at (198,1,21,1,173,6,98,4)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=8/32 threads=4 right=383891 left=22398901936 matches=7902409 hits=1 bad=0 max_total=558 at (102,2,101,4,346,1,5,1)
+SUMMARY N=532 T=558 KMAX=554 w=30 wk=30 shard=9/32 threads=4 right=383891 left=23014926438 matches=6776502 hits=1 bad=0 max_total=560 at (134,3,66,2,7,1,92,1)
+HIT total=560 k0=134 l0=3 k1=66 l1=2 k2=7 l2=1 k3=92 l3=1 k4max=261
+HIT total=560 k0=169 l0=1 k1=107 l1=4 k2=199 l2=9 k3=36 l3=3 k4max=49
+HIT total=560 k0=170 l0=2 k1=106 l1=4 k2=199 l2=9 k3=36 l3=3 k4max=49
+HIT total=559 k0=133 l0=3 k1=66 l1=2 k2=7 l2=1 k3=92 l3=1 k4max=261
+HIT total=559 k0=168 l0=1 k1=107 l1=4 k2=199 l2=9 k3=36 l3=3 k4max=49
+HIT total=559 k0=169 l0=2 k1=106 l1=4 k2=199 l2=9 k3=36 l3=3 k4max=49
+HIT total=559 k0=193 l0=1 k1=266 l1=1 k2=44 l2=1 k3=22 l3=3 k4max=34
+HIT total=559 k0=194 l0=2 k1=265 l1=1 k2=44 l2=1 k3=22 l3=3 k4max=34
+HIT total=558 k0=101 l0=1 k1=102 l1=4 k2=346 l2=1 k3=5 l3=1 k4max=4
+HIT total=558 k0=102 l0=2 k1=101 l1=4 k2=346 l2=1 k3=5 l3=1 k4max=4
+HIT total=558 k0=132 l0=3 k1=105 l1=3 k2=99 l2=2 k3=6 l3=3 k4max=216
+HIT total=558 k0=167 l0=1 k1=107 l1=4 k2=199 l2=9 k3=36 l3=3 k4max=49
+HIT total=558 k0=168 l0=2 k1=106 l1=4 k2=199 l2=9 k3=36 l3=3 k4max=49
+HIT total=558 k0=170 l0=1 k1=72 l1=1 k2=26 l2=2 k3=113 l3=1 k4max=177
+HIT total=558 k0=180 l0=1 k1=45 l1=2 k2=207 l2=2 k3=24 l3=2 k4max=102
+HIT total=558 k0=181 l0=2 k1=44 l1=2 k2=207 l2=2 k3=24 l3=2 k4max=102
+HIT total=558 k0=192 l0=1 k1=22 l1=1 k2=69 l2=2 k3=235 l3=1 k4max=40
+HIT total=558 k0=192 l0=1 k1=266 l1=1 k2=44 l2=1 k3=22 l3=3 k4max=34
+HIT total=558 k0=193 l0=2 k1=265 l1=1 k2=44 l2=1 k3=22 l3=3 k4max=34
+HIT total=558 k0=198 l0=1 k1=21 l1=1 k2=173 l2=6 k3=98 l3=4 k4max=68
+HIT total=558 k0=199 l0=2 k1=20 l1=1 k2=173 l2=6 k3=98 l3=4 k4max=68
+HIT total=558 k0=219 l0=1 k1=72 l1=3 k2=19 l2=3 k3=207 l3=2 k4max=41
+HIT total=558 k0=228 l0=1 k1=184 l1=3 k2=20 l2=1 k3=101 l3=1 k4max=25
+HIT total=558 k0=229 l0=2 k1=183 l1=3 k2=20 l2=1 k3=101 l3=1 k4max=25
+HIT total=558 k0=288 l0=1 k1=142 l1=1 k2=31 l2=1 k3=29 l3=1 k4max=68
+HIT total=558 k0=289 l0=2 k1=141 l1=1 k2=31 l2=1 k3=29 l3=1 k4max=68

@@ -38,7 +38,7 @@ jobs:
       - name: confirm B4(N) <= KMAX with b4mitm
         working-directory: tools/xcheck
         run: |
-          gcc -O3 -march=native -o b4mitm b4mitm.c
+          gcc -O3 -march=native -DLIMBS=16 -o b4mitm b4mitm.c
           T4=$(( ${{ inputs.KMAX }} + 1 ))
           ./b4mitm ${{ inputs.N }} $T4 ${{ inputs.B3 }} | tee b4.txt
           grep -q "max_total=-1" b4.txt
