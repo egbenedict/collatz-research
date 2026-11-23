@@ -12,3 +12,4 @@ tools/density/predcount
 tools/parity/*.o
 tools/xcheck/b3mitm
 tools/xcheck/b3mitm36
+tools/xcheck/b5/b6mitm

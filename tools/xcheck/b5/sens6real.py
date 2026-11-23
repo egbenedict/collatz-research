@@ -5,6 +5,10 @@ Usage: sens6real.py m c [c ...]"""
 import io, contextlib, json, sys
 from b5lib import *
 real = {int(k): v["B5"] for k, v in json.loads((HERE / "b5_values.json").read_text()).items()}
+import os
+for a in os.environ.get("EXTRA5", "").split():
+    k, v = map(int, a.split(":")); real[k] = v   # hypothetical extra B5 (rule 5 only; not used as a B6 base)
+base = sorted(int(k) for k in json.loads((HERE / "b5_values.json").read_text()))
 m = int(sys.argv[1])
 def closes(b6):
     ch = checker(real); ch.tab[6] = M.Table(b6)
@@ -12,7 +16,7 @@ def closes(b6):
         fails, worst = M.check_m(ch, m)
     return not fails, worst[0]
 for c in map(int, sys.argv[2:]):
-    S = sorted(real)
+    S = list(base)
     ok, w = closes({N: real[N] + c for N in S})
     if not ok:
         print(f"m={m} c={c}: open even with B6 at all {len(S)} points (worst {w:.4f})", flush=True); continue

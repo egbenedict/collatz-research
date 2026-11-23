@@ -725,3 +725,21 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Deciding run started**: full B₅(532) search at T = 561 (256 shards, about 430 runner-hours, about a day
   of wall time). No hits ⇒ B₅(532) = 560 ⇒ m = 137 closes (computed, one solver). Any hit ⇒ this route
   cannot reach m = 137.
+- **Rule 6 reconsidered** (`b5/sens6real.py`, `logs/sens6real_13{8,9}*.log`; hypothetical B₆ = B₅ + c at the
+  computed B₅ points, with B₅(532) = 560 assumed for m ≥ 138):
+  - c = 2 closes m = 137 with {74, 79} alone, without needing B₅(532).
+  - c = 2 closes m = 138 with {74, 79}.
+  - c = 2 closes m = 139 with {74, 121, 124, 199}, and m = 140 with {74, 121, 124, 201, 327}.
+  - c = 3 closes m = 137–138 with {120, 199}, and m = 139 adds 326.
+  - c ≥ 5 closes nothing.
+  So a small six-rise gap at moderate N would beat the B₅(850) wall. The deciding question is the real
+  B₆ − B₅ gap.
+- `b5/b6mitm.c`: b5mitm plus one full left pair (k₂,l₂) with exact feasibility; right side R(K₄,l₄); window
+  w = T+5−N; KMAX ≥ B₅(N). `test_b6mitm.py`: equals `rises.py` B₆ for N = 8…22 (nothing at T+1, witnesses
+  realised, 1-thread = 4-thread). Small-N gaps B₆ − B₅ there are 1–4.
+- **B₆(73) = 96** (b6mitm, T = 92, KMAX = B₅(73) = 91, 55 hits, bad = 0, 302 s on one core), so B₆ − B₅ = 5 at
+  N = 73. B₆ is nondecreasing, so B₆(74) ≥ 96 > 93, and the c = 2 route {74, 79} is dead. With c = 4,
+  m = 137 (without B₅(532)) needs B₆(121) ≤ 147 and B₆(326) ≤ 359. B₆ costs about C(N,8): roughly
+  (326/73)⁸ · 5 min ≈ 1.3·10⁴ runner-hours for N = 326, about 30× the B₅(532) run. **Rule 6 does not beat
+  the wall.** (The `EXTRA5=532:560` c = 4 line "closes with {73}" is an artefact: m = 137 closes with no B₆
+  at all once B₅(532) = 560 is assumed, and the greedy keeps one point.)
