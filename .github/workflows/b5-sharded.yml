@@ -1,0 +1,81 @@
+name: B5 sharded (fast solver over many runners)
+# Run from the Actions tab or: gh workflow run b5-sharded.yml -f N=326 -f T=350 -f KMAX=349 -f B3=357
+
+# Computes every odd n < 2^N whose first five rises total >= T (b5mitm.c, sharded by work item).
+# Also confirms the KMAX input: b4mitm finds no n < 2^N with a four-rise total >= KMAX+1 (cap B3 = b3(N)).
+# Used for B5(326), the one new input that m = 136 needs (ideas/log.md I-017).
+
+on:
+  workflow_dispatch:
+    inputs:
+      N:    { description: "bit length N", default: "326" }
+      T:    { description: "threshold T", default: "350" }
+      KMAX: { description: "b4(N): cap on the first four rises", default: "349" }
+      B3:   { description: "b3(N): cap used to confirm KMAX with b4mitm", default: "357" }
+
+env:
+  NS: 64
+
+jobs:
+  b4confirm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - name: confirm B4(N) <= KMAX with b4mitm
+        working-directory: tools/xcheck
+        run: |
+          gcc -O3 -march=native -o b4mitm b4mitm.c
+          T4=$(( ${{ inputs.KMAX }} + 1 ))
+          ./b4mitm ${{ inputs.N }} $T4 ${{ inputs.B3 }} | tee b4.txt
+          grep -q "max_total=-1" b4.txt
+          if grep -q UNRESOLVED b4.txt; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        with: { name: b4confirm, path: tools/xcheck/b4.txt }
+
+  shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+                32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+    steps:
+      - uses: actions/checkout@v4
+      - name: build and run one shard (4 threads)
+        working-directory: tools/xcheck/b5
+        run: |
+          gcc -O3 -march=native -DLIMBS=16 -o b5mitm b5mitm.c -lpthread
+          /usr/bin/time -v ./b5mitm ${{ inputs.N }} ${{ inputs.T }} ${{ inputs.KMAX }} 4 ${{ matrix.shard }} $NS > shard_${{ matrix.shard }}.txt 2> time_${{ matrix.shard }}.txt
+          tail -1 shard_${{ matrix.shard }}.txt
+          grep -E "Elapsed|Maximum resident" time_${{ matrix.shard }}.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: "shard-${{ matrix.shard }}", path: "tools/xcheck/b5/shard_${{ matrix.shard }}.txt" }
+
+  combine:
+    needs: [b4confirm, shard]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: out }
+      - name: combine shards
+        run: |
+          set -e
+          n=$(cat out/shard-*/shard_*.txt | grep -c '^SUMMARY')
+          echo "summaries: $n / $NS"; test "$n" -eq "$NS"
+          if grep -h '^UNRESOLVED' out/shard-*/shard_*.txt; then exit 1; fi
+          bad=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* bad=\([0-9]*\).*/\1/' | paste -sd+ | bc)
+          left=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* left=\([0-9]*\).*/\1/' | paste -sd+ | bc)
+          grep -h '^HIT' out/shard-*/shard_*.txt | sort -t= -k2 -n -r > hits.txt || true
+          max=$(head -1 hits.txt | sed 's/HIT total=\([0-9]*\).*/\1/')
+          { echo "### B5 sharded: N=${{ inputs.N }} T=${{ inputs.T }} KMAX=${{ inputs.KMAX }}"
+            echo "- shards: $n/$NS, bad=$bad, left prefixes=$left, hits=$(wc -l < hits.txt), max total=${max:-none (< T)}"
+            echo "- b4confirm: ${{ needs.b4confirm.result }}"
+            echo '```'; head -40 hits.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          cat "$GITHUB_STEP_SUMMARY"
+          test "$bad" -eq 0
+          test "${{ needs.b4confirm.result }}" = success
+      - uses: actions/upload-artifact@v4
+        with: { name: combined, path: hits.txt }

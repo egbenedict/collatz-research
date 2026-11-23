@@ -257,7 +257,7 @@ reason is progress. The kill tests are defined in `../README.md`.
   roughly hours of CPU. B₂ and B₃ at large N would need their own fast solvers.
 
 ### I-003: SAT and rewriting-system termination (attack line 2)
-- **Status:** open. Reproduction done in iteration 7 (see I-015); a long run on the new system H is under way.
+- **Status:** open. Reproduction done in iteration 7 (see I-015). The long run on system H found no proof; natural d=4 top termination timed out.
 - **Claim:** Find a matrix or arctic interpretation proving termination of a stronger
   Collatz variant than they reached.
 - **Kill tests:** Conway is the main risk. The rewriting system encodes the specific map,
@@ -529,8 +529,16 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Limits:** UNSAT covers only the shapes searched, and timeouts mean nothing. The search used
   about 1 CPU-hour, against YAH's thousands, and the prover is about 10× slower than theirs. The
   arctic top-termination strictness argument is unformalized.
-- **Next:** the long run on H is on GitHub Actions (4 shapes in parallel):
+- **Long run on H** (GitHub Actions run 45084419328, 1 h per query, 4 shapes in parallel):
   https://github.com/egbenedict/collatz-research/actions/runs/45084419328
+  - Every shape removes the two H rules (ff⊿→0⊿, ttt⊿→22⊿) in round 1 in under 1 s.
+  - Arctic d=4 w=2, arctic d=4 w=3 and arctic d=5 w=2: the remaining system is then **UNSAT**
+    (no rule removable), so these shapes are exhausted.
+  - Natural d=4 w=2 gets further: it removes the X-digit rules and the left-end rules
+    (<0→<t, <1→<ff, <2→<ft), leaving top termination SN(H_top / R). That query **timed out**
+    (3600 s) in both directions (about 95k variables / 325k clauses).
+  - Conclusion: no proof of H in these shapes. The open part is a natural-matrix
+    top-termination query at d=4, the same bottleneck YAH report for the full system.
 
 ### I-016: Track C, no m-cycles for m ≤ 135 (computed; iteration 7, 2026-11-22)
 - **Status:** computed, not proved. Every new B₅ input to m ≤ 135 is cross-checked by two independent solvers.
@@ -561,3 +569,26 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Significance:** this goes two steps past the best published computed bound (m ≤ 133,
   Marshall) and past the Lean-checked m ≤ 111. It is still finite: the cycle side can never be
   closed this way.
+
+### I-017: Track C, m = 136 needs one new value, B₅(326) (iteration 8, 2026-11-22)
+- **Status:** computing (GitHub Actions, 64 shards). Not proved.
+- **Which points:** `tools/xcheck/b5/minset136.py` uses the computed table plus hypothetical
+  B₅ = b₄ + 4 at the other B₄ grid points.
+  - Grid points up to N = 321: m = 136 stays open (hard shape 1.4640).
+  - Grid points up to 326: m = 136 closes (worst 0.9236).
+  - Greedy minimal set: **{326} alone**.
+- **Tolerance** (`single135.py 4 136 …`, logs/single136.log):
+  - B₅ at N = 322 or 324 does not close m = 136, even at b₄ + 1.
+  - N = 326 closes **iff B₅(326) ≤ 361 = b₄(326) + 12**. At m = 134 and 135 the margins were +1, +3 and
+    +5, and the observed B₅ − b₄ is 2…4. So this margin is wide.
+- **Solver changes** (`b5mitm.c`):
+  - Optional `SHARD NSHARD` arguments split the work items.
+  - The join key uses only the low min(w, 30) bits of the window. A true hit has all w bits zero, so no
+    hit is lost.
+  - `-DLIMBS=16` gives 1024-bit arithmetic (N = 326 has shift cap LCAP = 534 > 512).
+  - Checked against the validated build: identical hit lists at (60, 74) for 5 shards, an 8-bit key and
+    LIMBS = 16 (42 hits), and at (73, 91), where it also matches v0. test_b5mitm.py passes to N = 30.
+- **Cost:** about 1.7·10¹² left prefixes, roughly 116 ns each single-threaded, so about 55 core-hours.
+  The table memory is 0.8 GB.
+- **Run:** `.github/workflows/b5-sharded.yml` with N=326 T=350 KMAX=349 B3=357. It also re-confirms
+  b₄(326) = 349 with b4mitm.

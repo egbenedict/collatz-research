@@ -8,7 +8,7 @@
  *   nu = A + 2^L3 R.  z = lowest set bit of nu at position >= N (Terras + least representative),
  *   fifth rise <= z - P (P = K3 + L), total = z - L. total >= T needs z >= T + L >= T + 4, so
  *   bits [N, T+4) of nu are zero: with w = T + 4 - N, window(A) + window(2^L3 R) + carry == 0 mod 2^w,
- *   carry in {0,1}. Each match is then tested exactly mod 2^512.
+ *   carry in {0,1}. Each match is then tested exactly mod 2^BITS (BITS = 64 LIMBS; 512 by default).
  *
  * Bounds (rigorous, as in b4mitm):
  *   k0 <= N; l0, k1, l1, k2, l2 limited by prefix feasibility (bits [N,P) of the prefix class are 0);
@@ -21,15 +21,23 @@
  *   final bits [0, P1+k2+l2) of A for every l2, so the l2 loop runs to max(N, z_N(V)) - P1 - k2 exactly.
  *   Work items (k0,l0) are shared by NTHREADS pthreads through an atomic counter.
  *
- * Usage: b5mitm N T KMAX [NTHREADS]
+ * Window: only the low WK = min(w, 30) bits of the w-bit window are used as the join key. A true hit has
+ *   all w bits zero, so in particular the low WK bits; this is a weaker filter, never a lost hit (every
+ *   match is still tested exactly mod 2^BITS).
+ * Sharding: optional SHARD NSHARD keep only work items (k0,l0) with index % NSHARD == SHARD. The union of
+ *   all shards is exactly the unsharded item list.
+ *
+ * Usage: b5mitm N T KMAX [NTHREADS [SHARD NSHARD]]
  */
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define LIMBS 8
-#define BITS 512
+#ifndef LIMBS
+#define LIMBS 8           /* 8 limbs = 512 bits; N >= ~300 needs -DLIMBS=16 (shift cap LCAP < BITS) */
+#endif
+#define BITS (64 * LIMBS)
 typedef struct { uint64_t w[LIMBS]; } big;
 
 static inline void add(big *r, const big *a, const big *b) {
@@ -98,9 +106,12 @@ static inline void term(big *r, const big *uK, int s, int l) {
 
 #include <pthread.h>
 #include <stdatomic.h>
+#ifndef WKCAP
+#define WKCAP 30
+#endif
 #define KU 1100
 static big U[KU];
-static int N, T, KMAX, w, KB, nb, nR, LCAP;
+static int N, T, KMAX, w, WK, KB, nb, nR, LCAP;
 static uint32_t mask;
 static big *R; static int *RK, *RL;
 static int **TSTART; static uint32_t **TKEY; static int **TORD;   /* per shift L3 */
@@ -114,7 +125,7 @@ static void build_table(int L3) {
     uint32_t *key = malloc(sizeof(uint32_t) * nR);
     int *start = calloc(nb + 1, sizeof(int)), *ord = malloc(sizeof(int) * nR);
     uint32_t *okey = malloc(sizeof(uint32_t) * nR);
-    for (int i = 0; i < nR; i++) { key[i] = shifted_window(&R[i], L3, N, w); start[(key[i] & (nb - 1)) + 1]++; }
+    for (int i = 0; i < nR; i++) { key[i] = shifted_window(&R[i], L3, N, WK); start[(key[i] & (nb - 1)) + 1]++; }
     for (int b = 0; b < nb; b++) start[b + 1] += start[b];
     int *fill = malloc(sizeof(int) * nb); memcpy(fill, start, sizeof(int) * nb);
     for (int i = 0; i < nR; i++) { int j = fill[key[i] & (nb - 1)]++; ord[j] = i; okey[j] = key[i]; }
@@ -154,7 +165,7 @@ static void *worker(void *arg) {
                         if (L3 >= LCAP) { st->bad++; break; }
                         big A, s2; shl(&s2, &U[K2], L3); sub(&A, &V, &s2);
                         st->nleft++;
-                        uint32_t a_hi = window(&A, N, w);
+                        uint32_t a_hi = window(&A, N, WK);
                         int *start = TSTART[L3]; uint32_t *okey = TKEY[L3]; int *ord = TORD[L3];
                         for (int c = 0; c <= 1; c++) {
                             uint32_t need = (uint32_t)(-(int64_t)a_hi - c) & mask;
@@ -169,7 +180,7 @@ static void *worker(void *arg) {
                                 int L = L3 + RL[i], P = RK[i] + L;
                                 if (z < 0) {
                                     pthread_mutex_lock(&outmx);
-                                    printf("UNRESOLVED k0=%d l0=%d k1=%d l1=%d k2=%d l2=%d k3=%d l3=%d (z >= 512)\n", k0, l0, k1, l1, k2, l2, RK[i] - K2, RL[i]);
+                                    printf("UNRESOLVED k0=%d l0=%d k1=%d l1=%d k2=%d l2=%d k3=%d l3=%d (z >= %d)\n", k0, l0, k1, l1, k2, l2, RK[i] - K2, RL[i], BITS);
                                     pthread_mutex_unlock(&outmx);
                                     st->nhits++; continue;
                                 }
@@ -194,13 +205,16 @@ static void *worker(void *arg) {
 }
 
 int main(int argc, char **argv) {
-    if (argc < 4) { fprintf(stderr, "usage: %s N T KMAX [NTHREADS]\n", argv[0]); return 2; }
+    if (argc < 4) { fprintf(stderr, "usage: %s N T KMAX [NTHREADS [SHARD NSHARD]]\n", argv[0]); return 2; }
     N = atoi(argv[1]); T = atoi(argv[2]); KMAX = atoi(argv[3]);
     int NT = argc > 4 ? atoi(argv[4]) : 1;
+    int SH = argc > 6 ? atoi(argv[5]) : 0, NS = argc > 6 ? atoi(argv[6]) : 1;
+    if (NS < 1 || SH < 0 || SH >= NS || NT < 1 || NT > 64) { fprintf(stderr, "bad shard/threads\n"); return 2; }
     w = T + 4 - N;
     LCAP = N + (585 * KMAX) / 1000 + 4;
-    if (w < 1 || w > 30 || T + 4 > BITS - 2 || N + 64 > BITS || KMAX >= KU || LCAP >= BITS) { fprintf(stderr, "bad parameters (w=%d)\n", w); return 2; }
-    KB = w < 16 ? w : 16; nb = 1 << KB; mask = (1u << w) - 1;
+    if (w < 1 || T + 4 > BITS - 2 || N + 64 > BITS || KMAX >= KU || LCAP >= BITS) { fprintf(stderr, "bad parameters (w=%d)\n", w); return 2; }
+    WK = w < WKCAP ? w : WKCAP;
+    KB = WK < 16 ? WK : 16; nb = 1 << KB; mask = (1u << WK) - 1;
 
     big inv3; for (int i = 0; i < LIMBS; i++) inv3.w[i] = 0xAAAAAAAAAAAAAAAAULL; inv3.w[0] = 0xAAAAAAAAAAAAAAABULL;
     { big three; memset(&three, 0, sizeof three); three.w[0] = 3; big chk; mul(&chk, &inv3, &three);
@@ -220,8 +234,8 @@ int main(int argc, char **argv) {
     TSTART = calloc(LCAP, sizeof(int *)); TKEY = calloc(LCAP, sizeof(uint32_t *)); TORD = calloc(LCAP, sizeof(int *));
     for (int L3 = 3; L3 < LCAP; L3++) build_table(L3);
 
-    items = malloc(sizeof(int[2]) * (N + 1) * (LCAP + 1)); nitems = 0;
-    for (int k0 = 1; k0 <= N; k0++) for (int l0 = 1; l0 < LCAP; l0++) { items[nitems][0] = k0; items[nitems][1] = l0; nitems++; }
+    items = malloc(sizeof(int[2]) * (N + 1) * (LCAP + 1)); nitems = 0; long idx = 0;
+    for (int k0 = 1; k0 <= N; k0++) for (int l0 = 1; l0 < LCAP; l0++) { if (idx++ % NS == SH) { items[nitems][0] = k0; items[nitems][1] = l0; nitems++; } }
     atomic_store(&next_item, 0);
     pthread_t th[64]; stats st[64]; memset(st, 0, sizeof st);
     for (int i = 0; i < NT; i++) { st[i].best = -1; pthread_create(&th[i], NULL, worker, &st[i]); }
@@ -231,8 +245,8 @@ int main(int argc, char **argv) {
         tot.nleft += st[i].nleft; tot.nmatch += st[i].nmatch; tot.nhits += st[i].nhits; tot.bad += st[i].bad;
         if (st[i].best > tot.best) { tot.best = st[i].best; memcpy(tot.bk, st[i].bk, sizeof tot.bk); }
     }
-    printf("SUMMARY N=%d T=%d KMAX=%d w=%d threads=%d right=%d left=%lld matches=%lld hits=%lld bad=%lld max_total=%d",
-           N, T, KMAX, w, NT, nR, tot.nleft, tot.nmatch, tot.nhits, tot.bad, tot.best);
+    printf("SUMMARY N=%d T=%d KMAX=%d w=%d wk=%d shard=%d/%d threads=%d right=%d left=%lld matches=%lld hits=%lld bad=%lld max_total=%d",
+           N, T, KMAX, w, WK, SH, NS, NT, nR, tot.nleft, tot.nmatch, tot.nhits, tot.bad, tot.best);
     if (tot.best >= 0) printf(" at (%d,%d,%d,%d,%d,%d,%d,%d)", tot.bk[0], tot.bk[1], tot.bk[2], tot.bk[3], tot.bk[4], tot.bk[5], tot.bk[6], tot.bk[7]);
     printf("\n");
     return tot.bad ? 3 : 0;

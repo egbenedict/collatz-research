@@ -6,7 +6,7 @@ import rises
 T4 = M.Table(rises.load_marshall(ROOT)[4])
 real = {int(k): v["B5"] for k, v in json.loads((HERE / "b5_values.json").read_text()).items()}
 c = int(sys.argv[1]); m = int(sys.argv[2]); Ns = [int(x) for x in sys.argv[3:]]
-cheap = {N: T4.b(N) + c for N in (122, 128) if N not in real}
+cheap = {N: T4.b(N) + c for N in (122, 128) if N not in real}  # empty once both are computed
 def run(N, V):
     t = dict(cheap); t[N] = V; t.update(real)
     with contextlib.redirect_stdout(io.StringIO()):

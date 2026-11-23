@@ -1,0 +1,4 @@
+m=136 N=322: even B5 = b4+1 = 350 does not close
+m=136 N=324: even B5 = b4+1 = 350 does not close
+m=136 N=326: b4(N) = 349; closes iff B5(326) <= 361 (= b4 + 12)
+m=136 N=328: b4(N) = 349; closes iff B5(328) <= 361 (= b4 + 12)
