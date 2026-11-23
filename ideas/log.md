@@ -533,7 +533,7 @@ reason is progress. The kill tests are defined in `../README.md`.
   https://github.com/egbenedict/collatz-research/actions/runs/45084419328
 
 ### I-016: Track C, no m-cycles for m ≤ 135 (computed; iteration 7, 2026-11-22)
-- **Status:** computed, not proved. m ≤ 134 is cross-checked by two solvers; the m = 135 cross-check is running.
+- **Status:** computed, not proved. Every new B₅ input to m ≤ 135 is cross-checked by two independent solvers.
   Code in `tools/xcheck/b5/` (NOTES.md).
 - **Method:** a five-rise bound B₅(N), computed exactly by meet-in-the-middle (`b5mitm.c`, exact
   mod 2^512), added as rule 5 to our independent Marshall-style chain (`mchain.py`).
@@ -552,11 +552,10 @@ reason is progress. The kill tests are defined in `../README.md`.
   - Every maximizer is re-simulated as an integer.
   - **N = 121 cross-checked:** v0 on 8 workers gives the same 4 maximizers (total 143) as
     `b5mitm.c` (`logs/v0_hits_N121_T143.txt`). So m = 134 rests on two independent solvers.
-  - N = 199, needed only for m = 135: the fast solver gives exactly 2 hits at total 225 (local,
-    `logs/v1_hits_N199_T225.txt`). The v0 cross-check moved to GitHub Actions (32 jobs × 4
-    workers, `.github/workflows/b5-crosscheck.yml`). A smoke test at N = 73 passed (128/128
-    workers, identical hits). The real run is
-    https://github.com/egbenedict/collatz-research/actions/runs/45084416562.
+  - **N = 199 cross-checked** (GitHub Actions run 45084416562, 51 min):
+    - v0 sharded over 128 workers gives exactly the same 2 maximizers (total 225) as
+      `b5mitm.c`.
+    - The fast solver gives identical hits locally (clang/arm64) and on the runner (gcc/x86-64).
 - **Relies on:** Barina's 2^71 verification, Rhin's bound (unchecked), Marshall's B₂–B₄ tables
   (spot-checked; see `tools/xcheck/README.md`), and the rule-5 chain lemma (rules 2–4 composed).
 - **Significance:** this goes two steps past the best published computed bound (m ≤ 133,
