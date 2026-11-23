@@ -685,3 +685,20 @@ reason is progress. The kill tests are defined in `../README.md`.
 - `tools/xcheck/b3mitm.c`: a three-rise MITM derived from b4mitm (LIMBS configurable). It matches
   `rises.py` B₃ for N = 4…40 (witnesses realised, nothing at T+1) and Marshall at 310 (324) and
   412 (429), with nothing at T+1, in under 1 s each. Exact B₃ at the off-grid queries is cheap.
+- **m = 137 requirements** (hypothetical inputs; `logs/b3minset137.log`, `logs/b3tol2168.log`,
+  `logs/tol137_327_b3.log`):
+  - With today's B₅ values (b₅(327) = B₅(328) = 359): closes iff B₅(532) = 557 **and** B₃(2168) ≤ 2197.
+    The greedy minimal B₃ set is the single point {2168}, and B₅(532) = 558 never closes.
+  - With exact B₅(327) = v (355 ≤ v ≤ 358): closes iff B₅(532) ≤ 560 − (v − 355). The B₃(2168) value no
+    longer matters there.
+- b3mitm at full size: B₃(2122) = 2141 at T = 2141 (4 hits, 2304-bit arithmetic, 0 unresolved, 507 s,
+  1.8 GB). This matches Marshall. The negative control T = 2142 and B₃(2168) are running locally.
+- Running on Actions: exact B₅(327) (45157752295, T = 355), and a partial B₅(532) falsifier at T = 558
+  (45157906247, items k₀ ≥ 100, l₀ ≤ 6; lower bound only).
+- **B₃(2168) = 2188** (b3mitm, 2304-bit, T = 2180, KMAX = exact B₂(2168) = 2179 from rises.py, 561 hits,
+  0 unresolved). The maximiser (428,1,984,1) re-simulates as a 2166-bit integer with rises 428, 984, 776.
+  The interpolation estimate was 2187. Controls: B₃(2122) = 2141 exactly (Marshall's value, nothing at
+  T = 2142, witness 2121 bits). Stored in `tools/xcheck/b3_values.json`. This is the first off-grid table
+  value. It is checked by one solver (b3mitm) only, plus the positive and negative controls.
+- With this real value, m = 137 closes iff **B₅(532) = 557** (checked: 557 closes at 0.9236, 558 is open),
+  or with the B₅(327) tolerances above. Everything now hinges on B₅(532) and B₅(327).
