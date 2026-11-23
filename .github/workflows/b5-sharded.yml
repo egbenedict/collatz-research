@@ -12,12 +12,21 @@ on:
       T:    { description: "threshold T", default: "350" }
       KMAX: { description: "b4(N): cap on the first four rises", default: "349" }
       B3:   { description: "b3(N): cap used to confirm KMAX with b4mitm", default: "357" }
+      NS:   { description: "number of shards (<= 256)", default: "64" }
       B4T:  { description: "optional: also list four-rise totals >= B4T (exact B4 / positive control)", default: "" }
 
 env:
-  NS: 64
+  NS: ${{ inputs.NS }}
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      shards: ${{ steps.m.outputs.shards }}
+    steps:
+      - id: m
+        run: echo "shards=$(python3 -c 'import json; print(json.dumps(list(range(int("${{ inputs.NS }}")))))')" >> "$GITHUB_OUTPUT"
+
   b4confirm:
     runs-on: ubuntu-latest
     timeout-minutes: 350
@@ -42,13 +51,13 @@ jobs:
         with: { name: b4confirm, path: "tools/xcheck/b4*.txt" }
 
   shard:
+    needs: setup
     runs-on: ubuntu-latest
     timeout-minutes: 350
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-                32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+        shard: ${{ fromJSON(needs.setup.outputs.shards) }}
     steps:
       - uses: actions/checkout@v4
       - name: build and run one shard (4 threads)
