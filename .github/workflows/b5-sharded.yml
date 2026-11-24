@@ -17,6 +17,7 @@ on:
       K0MIN: { description: "partial search only (lower bounds): keep items with k0 >= K0MIN", default: "1" }
       K0MAX: { description: "partial search only: keep items with k0 <= K0MAX (empty = N)", default: "" }
       L0MAX: { description: "partial search only: keep items with l0 <= L0MAX (large = no limit)", default: "100000" }
+      SHARDS: { description: "optional comma list of shard indices (of NS) to run, e.g. to redo cancelled shards; empty = all", default: "" }
 
 env:
   NS: ${{ inputs.NS }}
@@ -28,7 +29,7 @@ jobs:
       shards: ${{ steps.m.outputs.shards }}
     steps:
       - id: m
-        run: echo "shards=$(python3 -c 'import json; print(json.dumps(list(range(int("${{ inputs.NS }}")))))')" >> "$GITHUB_OUTPUT"
+        run: echo "shards=$(python3 -c 'import json; s="${{ inputs.SHARDS }}".strip(); print(json.dumps([int(x) for x in s.split(",") if x.strip()] if s else list(range(int("${{ inputs.NS }}")))))')" >> "$GITHUB_OUTPUT"
 
   b4confirm:
     runs-on: ubuntu-latest
@@ -85,7 +86,8 @@ jobs:
         run: |
           set -e
           n=$(cat out/shard-*/shard_*.txt | grep -c '^SUMMARY')
-          echo "summaries: $n / $NS"; test "$n" -eq "$NS"
+          want=$(python3 -c 's="${{ inputs.SHARDS }}".strip(); print(len([x for x in s.split(",") if x.strip()]) if s else int("${{ inputs.NS }}"))')
+          echo "summaries: $n / $want (of NS=$NS)"; test "$n" -eq "$want"
           if grep -h '^UNRESOLVED' out/shard-*/shard_*.txt; then exit 1; fi
           bad=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* bad=\([0-9]*\).*/\1/' | paste -sd+ | bc)
           left=$(grep -h '^SUMMARY' out/shard-*/shard_*.txt | sed 's/.* left=\([0-9]*\).*/\1/' | paste -sd+ | bc)
