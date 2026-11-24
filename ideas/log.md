@@ -771,3 +771,6 @@ reason is progress. The kill tests are defined in `../README.md`.
   (that needed B₅(532) ≤ 560). Under the **fall-weighted** rule this pattern scores 314.33, far below the
   tolerance 324.134. After 19 of 256 shards: 10 hits, bad = 0, max weighted 322.409 (the 558 pattern with
   fall sum 4). So the weighted rule is what keeps m = 137 alive, pending the remaining shards.
+- T = 557 run at 126/256 shards: 59 hits, bad = 0, max total 563. New top weighted value 323.164 (a 561 pattern
+  with fall sum 5), still below the m = 137 tolerance 324.134 (margin 0.97). Under the standard rule this
+  561 alone would have closed off m = 137.
