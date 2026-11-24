@@ -776,3 +776,8 @@ reason is progress. The kill tests are defined in `../README.md`.
   561 alone would have closed off m = 137.
   The 323.164 witness is (92,1,24,1,388,2,37,1). It re-simulates as an odd 530-bit integer with rises
   92, 24, 388, 37, 20 and falls 1, 1, 2, 1. The other 561 pattern (44,5,156,…) has fall sum 15 (313.16).
+- **Incident:** 55 shards of the T = 557 run (indices 192–255 minus a few) were **cancelled** by GitHub after
+  waiting 24 h in the queue (256 jobs at 20 concurrent runners exceed the queue limit). The original run's
+  combine step will therefore fail on the summary count, as designed. Added a `SHARDS` input to the
+  workflow; those 55 shards are rerun in Actions 45428265079. The final verdict will merge the shard
+  summaries of both runs and check that all 256 indices are present exactly once.
