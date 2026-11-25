@@ -826,3 +826,6 @@ reason is progress. The kill tests are defined in `../README.md`.
   steps need a fifth rise.
 - **Consequence:** an independent check of m ≤ 137 needs a second B₅ implementation at N = 532 (v0 is about 40× slower,
   about 2·10⁴ runner-hours). Not feasible; the result stays "one solver plus controls".
+- **Track A relaunch (2026-11-25):** system H, natural matrix interpretations nat:4:2, nat:4:3, nat:5:2 with a
+  5 h per-query timeout (the earlier run gave 1 h; natural d = 4 top termination timed out). Actions 45544738386.
+  The workflow now takes a `configs` input. Low prior; it uses only cloud compute.
