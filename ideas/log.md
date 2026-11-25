@@ -843,3 +843,6 @@ reason is progress. The kill tests are defined in `../README.md`.
   (YAH: reverse arctic d = 5 with negative branching, 5–90 s; ours: timeout at 300 s). Long cloud run of F with
   arctic 5:4, 5:3, 4:4 and a 3 h per-query timeout (Actions 45600213779). If F is reproduced, the 5 h timeouts on
   H weigh somewhat more; if not, they weigh nothing.
+  - Run 45600213779 was misconfigured: with a single shape per job, F's ob1 removes 3 rules, then the next
+    query is UNSAT (arctic 5:4 ext, 0.6 s), so the run ends. No calibration information. The `configs`
+    entries may be comma lists, so it was rerun with mixed nat/arctic portfolios per job (Actions 45600406185).
