@@ -846,3 +846,22 @@ reason is progress. The kill tests are defined in `../README.md`.
   - Run 45600213779 was misconfigured: with a single shape per job, F's ob1 removes 3 rules, then the next
     query is UNSAT (arctic 5:4 ext, 0.6 s), so the run ends. No calibration information. The `configs`
     entries may be comma lists, so it was rerun with mixed nat/arctic portfolios per job (Actions 45600406185).
+- **F calibration result (Actions 45600406185, portfolios, 3 h/query):** ob1 and ob2 succeed in under 1 s. ob3-fwd
+  SN(H_top/R) is UNSAT through nat d = 3 w = 2 (7153 s) and arctic d = 3; arctic d = 4/4 and d = 5/4 are unknown
+  after 3 h. The job limit hit before ob3-rev reached arctic d = 5, YAH's shape (they needed 5–90 s with negative
+  branching and shuffles). **So our prover cannot reproduce YAH's hardest known proof, and its timeouts on H carry
+  no information.** YAH's own prover is public (github.com/emreyolcu/rewriting-collatz: prover/, negative-shuffle.py)
+  and would be the right tool for any further Track A attempt.
+- **Literature (found during calibration, unrefereed):** H. Nashida, *Dimension-free barriers for matrix
+  interpretations of the Collatz rewriting system…* (Zenodo 2026, doi 10.5281/zenodo.23081491, Part II; Part I:
+  doi 10.5281/zenodo.23081447; Lean code github.com/harappa/collatz-matrix-interpretation-barriers).
+  - **Claim:** any non-negative affine matrix interpretation, of any dimension, weakly orienting all 11 rules of T
+    (or its reversal) has non-positive growth on every primitive dominant block of the binary-digit matrices.
+    So such interpretations with an exponentially growing block cannot be used in YAH's relative
+    top-termination argument. An analogous barrier is claimed for a rewriting system for H.
+  - Only the positive weakenings (Theorem 8.2) are Lean-checked; **the barriers themselves are not formalised.**
+  - If correct, this explains structurally why every ob3 attempt on H and T stalls, and Track A as matrix
+    interpretation search is blocked in principle, not just by our budget.
+- **Track A status: stopped.** Reason: a claimed barrier result (not verified by us) plus a demonstrated
+  prover gap. Reopen only with YAH's prover and an interpretation class outside the barrier (for example
+  non-primitive or polynomially bounded blocks), which the barrier suggests are too weak.
