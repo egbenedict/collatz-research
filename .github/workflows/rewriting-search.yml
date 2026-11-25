@@ -9,6 +9,7 @@ on:
     inputs:
       system:  { description: "system name in srs.py", default: "H" }
       timeout: { description: "seconds per SAT query", default: "3600" }
+      configs: { description: "JSON list of interpretation shapes", default: '["arc:4:2", "nat:4:2", "arc:4:3", "arc:5:2"]' }
 
 jobs:
   search:
@@ -17,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config: ["arc:4:2", "nat:4:2", "arc:4:3", "arc:5:2"]
+        config: ${{ fromJSON(inputs.configs) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,4 +35,4 @@ jobs:
           if [ -n "$new" ]; then for f in $new; do cp "proofs/$f" ci_out/; python check.py "proofs/$f" | tee -a ci_out/search.log; done; else echo "no new proof" | tee -a ci_out/search.log; fi
       - uses: actions/upload-artifact@v4
         if: always()
-        with: { name: "H-${{ strategy.job-index }}", path: tools/rewriting/ci_out }
+        with: { name: "${{ inputs.system }}-${{ strategy.job-index }}", path: tools/rewriting/ci_out }
