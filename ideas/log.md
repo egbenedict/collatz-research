@@ -807,3 +807,13 @@ reason is progress. The kill tests are defined in `../README.md`.
     Corollary 13, Lemma 26). The chain uses n_{i+1} ≤ ½·C^{k_i}(n_i), one halving, and no rise tables.
   - So neither source uses C_r = max[(δ−1)Σk − Σl]. That is "not found in the two closest sources", not a
     literature-wide novelty claim. It is a technique for m-cycle bounds, not a Collatz proof idea.
+
+### I-018: Split (★) by k: 2-power-like starts handled separately (iteration 11, 2026-11-25)
+- **Status:** dead on arrival (no experiment needed).
+- **Idea:** the extremal frequencies are ξ = 2^k with 2^k ≈ 3ⁿ (I-007), and the worst start for (★) is
+  k ≈ n·log₂3 − 7 (main triangle of height about 0.21n, `tools/fourier/proof/NOTES.md` §4). So prove (★)
+  separately for those k and generically for the rest.
+- **Why it fails:** the walk's exponent J drops by the random b_p at every step, so after any prefix the
+  walk sits at an arbitrary (m, J). A chain of tall triangles can start at any later time, not only at
+  the start. Excluding such chains is the same 3-adic statement (2^d r₂ ≢ r₁ mod 3^{m₂}) whatever k is.
+  Splitting by k removes nothing. Same obstacle as I-014.
