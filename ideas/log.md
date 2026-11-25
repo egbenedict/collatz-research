@@ -829,3 +829,12 @@ reason is progress. The kill tests are defined in `../README.md`.
 - **Track A relaunch (2026-11-25):** system H, natural matrix interpretations nat:4:2, nat:4:3, nat:5:2 with a
   5 h per-query timeout (the earlier run gave 1 h; natural d = 4 top termination timed out). Actions 45544738386.
   The workflow now takes a `configs` input. Low prior; it uses only cloud compute.
+- **Track A relaunch result (Actions 45544738386):**
+  - In nat:4:2, nat:4:3 and nat:5:2, ob1 and ob2 are SAT in under 8 s and remove all digit and end rules.
+  - **ob3-fwd, SN(H_top / R) for H = {<0→<t, <1→<ff, <2→<ft}, is "unknown" after the full 18,000 s** in all three
+    shapes (97k–204k variables). The jobs then hit the 350-minute job limit before ob3-rev.
+  - Together with the earlier arctic d ≤ 5 exhaustion (UNSAT) and the 1 h natural timeouts, the bottleneck is
+    clear: top termination of the three head rules relative to the full system. Bigger natural matrices
+    don't crack it within the cloud job limits.
+  - **Track A is paused.** A different technique would be needed (for example dependency pairs with tuple
+    interpretations, or match bounds for the head rules); none of these is in the toolchain.
