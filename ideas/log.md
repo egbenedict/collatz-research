@@ -800,3 +800,10 @@ reason is progress. The kill tests are defined in `../README.md`.
     - It is the first use of the weighted rule and has not been independently reviewed.
   - Next: m = 138 needs the next saw-tooth block (B₅ near N ≈ 850, about 16× this cost). That is the end
     of Track C's reach.
+- **Novelty check of the fall-weighted rule (2026-11-25):**
+  - Marshall's METHOD.md (Lemma 2.1, Corollary 2.3) bounds r blocks by x_r ≤ x + (δ−1)s − r + c_r/((n+1) ln 2):
+    each descent counts only as ≥ 1. Lemma 2.1's proof uses only (2^l − 2) ≥ 0.
+  - Hercher (arXiv 2201.00406 v3, via ar5iv): descent lengths appear only in case distinctions (Lemma 9,
+    Corollary 13, Lemma 26). The chain uses n_{i+1} ≤ ½·C^{k_i}(n_i), one halving, and no rise tables.
+  - So neither source uses C_r = max[(δ−1)Σk − Σl]. That is "not found in the two closest sources", not a
+    literature-wide novelty claim. It is a technique for m-cycle bounds, not a Collatz proof idea.
