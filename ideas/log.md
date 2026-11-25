@@ -838,3 +838,8 @@ reason is progress. The kill tests are defined in `../README.md`.
     don't crack it within the cloud job limits.
   - **Track A is paused.** A different technique would be needed (for example dependency pairs with tuple
     interpretations, or match bounds for the head rules); none of these is in the toolchain.
+- **Track A calibration (I-015 follow-up):** do our H timeouts mean anything? Positive controls exist (all 11
+  rule deletions of T, W′, S3), but the hardest YAH result we failed to reproduce is the Farkas system F
+  (YAH: reverse arctic d = 5 with negative branching, 5–90 s; ours: timeout at 300 s). Long cloud run of F with
+  arctic 5:4, 5:3, 4:4 and a 3 h per-query timeout (Actions 45600213779). If F is reproduced, the 5 h timeouts on
+  H weigh somewhat more; if not, they weigh nothing.
