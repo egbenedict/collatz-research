@@ -817,3 +817,12 @@ reason is progress. The kill tests are defined in `../README.md`.
   walk sits at an arbitrary (m, J). A chain of tall triangles can start at any later time, not only at
   the start. Excluding such chains is the same 3-adic statement (2^d r₂ ≢ r₁ mod 3^{m₂}) whatever k is.
   Splitting by k removes nothing. Same obstacle as I-014.
+
+### I-019: Independent route to m ≤ 137 without B₅ (weighted rules 2–4 only) (iteration 12, 2026-11-25)
+- **Status:** dead. **Idea:** cross-validate the one-solver m ≤ 137 result using only fall-weighted C₂–C₄, which
+  the independent b3mitm and b4mitm could compute.
+- **Test** (hypothetical uniform weighted gain g on Marshall's B₂–B₄ tables, no rule 5; `logs/wgain_noB5.log`):
+  even g = 2 on rules 2–4 leaves m = 134 open (1.456), and m = 135–137 open (2.31 / 3.66 / 5.80). The binding
+  steps need a fifth rise.
+- **Consequence:** an independent check of m ≤ 137 needs a second B₅ implementation at N = 532 (v0 is about 40× slower,
+  about 2·10⁴ runner-hours). Not feasible; the result stays "one solver plus controls".
