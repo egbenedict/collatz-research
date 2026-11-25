@@ -1,0 +1,23 @@
+{
+ "532": {
+  "r": 5,
+  "C_upper": "Dh1*561 - 5",
+  "C_upper_float": 323.164,
+  "argmax": [
+   92,
+   1,
+   24,
+   1,
+   388,
+   2,
+   37,
+   1
+  ],
+  "argmax_total": 561,
+  "argmax_fall_sum": 5,
+  "floor": "Dh1*556 - 4 (patterns with total < 557)",
+  "source": "logs/b5_532_T557_hits.txt, verdict532.py",
+  "chain_b_eff": "(C + 4)/Dh1",
+  "m137_tolerance": 324.134
+ }
+}

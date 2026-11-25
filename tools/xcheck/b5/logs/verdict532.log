@@ -1,0 +1,4 @@
+files 256, NS 256, distinct shards 256, missing [], duplicates []
+bad 0, UNRESOLVED 0, HIT lines 111, summary hit total 111
+B5(532) = 563 (exact if >= 557); C5(532) <= 323.1640 (floor 321.2392); top pattern {'total': 561, 'k0': 92, 'l0': 1, 'k1': 24, 'l1': 1, 'k2': 388, 'l2': 2, 'k3': 37, 'l3': 1, 'k4max': 20}
+m = 137 with weighted C5(532): CLOSED (worst 0.9237); data checks PASS

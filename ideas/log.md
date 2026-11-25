@@ -781,3 +781,22 @@ reason is progress. The kill tests are defined in `../README.md`.
   combine step will therefore fail on the summary count, as designed. Added a `SHARDS` input to the
   workflow; those 55 shards are rerun in Actions 45428265079. The final verdict will merge the shard
   summaries of both runs and check that all 256 indices are present exactly once.
+- **RESULT: no m-cycles for m ≤ 137 (computed, not proved).** The T = 557 search at N = 532 is complete:
+  Actions 45206467636 (201 shards) plus the rerun 45428265079 (55 shards), all 256 shard indices exactly
+  once, bad = 0, no UNRESOLVED, 111 hits = 111 summary counts (`b5/verdict532.py`, `logs/verdict532.log`,
+  hit list `logs/b5_532_T557_hits.txt`).
+  - **B₅(532) = 563 exactly** (witness: a 529-bit integer with rises 46, 156, 264, 64, 33).
+  - **C₅(532) ≤ Dh1·561 − 5 = 323.164**, from (92,1,24,1,388,2,37,1), a 530-bit integer. This is below the
+    tolerance 324.134, so m = 137 closes with worst ratio 0.9237. m = 134–136 still close.
+  - Cross-check: the 26 hits of the independent partial run (k₀ ≥ 100, l₀ ≤ 6, T = 558) equal exactly the
+    full list's hits in that region. Values are stored in `b5/b5_values.json` (B₅ = 563) and
+    `b5/b5_weighted.json` (C₅ bound).
+  - **The standard rule alone fails m = 137 here** (it needs B₅(532) ≤ 560). The result depends on the
+    fall-weighted block lemma: own derivation, re-derived once, exact-integer kill test passed.
+  - Caveats:
+    - One solver (b5mitm) for B₅(326–328) and the N = 532 list, no second implementation at this size
+      (v0 would be about 40× slower).
+    - It relies on E1 (2⁷¹), E3 (Rhin) and Marshall's B₂–B₄ tables.
+    - It is the first use of the weighted rule and has not been independently reviewed.
+  - Next: m = 138 needs the next saw-tooth block (B₅ near N ≈ 850, about 16× this cost). That is the end
+    of Track C's reach.
