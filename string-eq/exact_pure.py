@@ -104,7 +104,9 @@ def lex_basis(polys, gens):
         os.unlink(path)
         if 'NOTZERODIM' in out: raise RuntimeError('ideal is not zero-dimensional')
         loc = {n: g for n, g in zip(names, gens)}
-        return [sp.sympify(l[4:].replace('^', '**'), locals=loc) for l in out.splitlines() if l.startswith('GEN ')]
+        res = [sp.sympify(l[4:].replace('^', '**'), locals=loc) for l in out.splitlines() if l.startswith('GEN ')]
+        if res: return res
+        print('  Singular returned no generators; falling back to sympy. Singular output head:', out[:400], flush=True)
     G = sp.groebner(polys, *gens, order='grevlex')
     return list(G.fglm('lex'))
 
