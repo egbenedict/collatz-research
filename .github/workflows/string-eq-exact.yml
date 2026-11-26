@@ -1,0 +1,28 @@
+name: String equation exact one-loop
+# gh workflow run string-eq-exact.yml
+on:
+  workflow_dispatch:
+jobs:
+  exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        pq: ["5 6", "5 7", "5 8", "5 9", "6 7", "7 8", "2 11", "3 10", "3 11", "4 9", "4 11"]
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq singular > /dev/null
+          pip install -q sympy mpmath python-flint
+          which Singular
+      - working-directory: string-eq
+        run: |
+          set -o pipefail
+          /usr/bin/time -v python exact_pure.py ${{ matrix.pq }} 2> time.txt | tee out.txt
+          grep -E "Elapsed|Maximum resident" time.txt
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-${{ strategy.job-index }}
+          path: string-eq/out.txt
