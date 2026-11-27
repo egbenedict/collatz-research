@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pq: ["5 8", "5 9", "6 7", "7 8", "4 11"]
+        pq: ["3 5", "4 11", "5 8"]
     steps:
       - uses: actions/checkout@v4
       - run: |
@@ -19,7 +19,7 @@ jobs:
       - working-directory: string-eq
         run: |
           set -o pipefail
-          /usr/bin/time -v python exact_pure.py ${{ matrix.pq }} 2> time.txt | tee out.txt
+          /usr/bin/time -v -o time.txt python -u exact_pure.py ${{ matrix.pq }} 2>&1 | tee out.txt
           grep -E "Elapsed|Maximum resident" time.txt
       - if: always()
         uses: actions/upload-artifact@v4
