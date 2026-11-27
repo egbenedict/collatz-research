@@ -11,6 +11,7 @@ Method.
  4. Also report on how many branches every res L^k (k<p) vanishes through hbar^2 (where (F) fails at the pure point).
 Usage: python exact_pure.py p q [seed]"""
 import sys, random, itertools, time
+sys.set_int_max_str_digits(0)   # Singular's exact coefficients can have thousands of digits
 from fractions import Fraction as Fr
 import sympy as sp
 from flint import fmpq_poly, fmpq
