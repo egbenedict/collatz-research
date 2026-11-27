@@ -87,6 +87,17 @@ def solve(M, b):
         x.append(det(Mk) * di)
     return x, d
 
+def sing_poly(f, gens):
+    """Singular syntax with every coefficient written first and parenthesised: Singular reads `3/25` as one rational
+    literal, so `x^3/25` would mean x^(3/25)."""
+    P = sp.Poly(sp.expand(f), *gens, domain='QQ')
+    terms = []
+    for mon, c in P.terms():
+        c = sp.Rational(c)
+        mono = '*'.join('%s^%d' % (g, e) for g, e in zip(gens, mon) if e)
+        terms.append('(%s/%s)' % (c.p, c.q) + ('*' + mono if mono else ''))
+    return ' + '.join(terms) if terms else '0'
+
 def lex_basis(polys, gens):
     """Lex Groebner basis (gens[-1] smallest).  Uses Singular (std in dp, then fglm to lp) when available,
     otherwise sympy grevlex + FGLM."""
@@ -94,7 +105,7 @@ def lex_basis(polys, gens):
     if shutil.which('Singular'):
         names = [str(g) for g in gens]
         src = ['ring r = 0, (%s), dp;' % ','.join(names), 'option(redSB);',
-               'ideal I = ' + ', '.join(str(sp.expand(f)).replace('**', '^') for f in polys) + ';',
+               'ideal I = ' + ', '.join(sing_poly(f, gens) for f in polys) + ';',
                'ideal J = std(I);', 'if (dim(J) != 0) { print("NOTZERODIM"); quit; }',
                'ring s = 0, (%s), lp;' % ','.join(names), 'ideal K = fglm(r, J);', 'short = 0;',
                'int i; for (i = 1; i <= size(K); i++) { print("GEN " + string(K[i])); }', 'quit;']
